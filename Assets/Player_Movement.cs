@@ -21,8 +21,8 @@ public class Player_Movement : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()
@@ -48,7 +48,7 @@ public class Player_Movement : MonoBehaviour
             else 
             {
                 forwardMovement = Input.GetAxis("Vertical") * playerWalkingSpeed;
-                sidewaysMovement = Input.GetAxis("Horizontal") * playerWalkingSpeed;
+                sidewaysMovement = - Input.GetAxis("Horizontal") * playerWalkingSpeed;
             }
         }
         else { verticalVelocity += Physics.gravity.y * Time.deltaTime; }
@@ -59,7 +59,7 @@ public class Player_Movement : MonoBehaviour
             verticalVelocity = jumpStrength;
         }
 
-        Vector3 playerMovement = new Vector3(sidewaysMovement, verticalVelocity, forwardMovement);
+        Vector3 playerMovement = new Vector3(forwardMovement, verticalVelocity, sidewaysMovement);
         //Poruszanie bohaterem
         cc.Move(transform.rotation * playerMovement * Time.deltaTime);
     }
