@@ -27,11 +27,11 @@ public class Player_Movement : MonoBehaviour
 
     void LateUpdate()
     {
-        //Rozglądanie się na boki
+        //Rozglądanie się na góra dół (nie działa)
         float horizontalRotation = Input.GetAxis("Mouse X");
         transform.Rotate(0, horizontalRotation, 0);
 
-        //Rozglądanie się góra-dół
+        //Rozglądanie się na boki
         verticalRotation -= Input.GetAxis("Mouse Y");
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalRotationLimit, verticalRotationLimit);
         Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
@@ -48,7 +48,7 @@ public class Player_Movement : MonoBehaviour
             else 
             {
                 forwardMovement = Input.GetAxis("Vertical") * playerWalkingSpeed;
-                sidewaysMovement = - Input.GetAxis("Horizontal") * playerWalkingSpeed;
+                sidewaysMovement = Input.GetAxis("Horizontal") * playerWalkingSpeed;
             }
         }
         else { verticalVelocity += Physics.gravity.y * Time.deltaTime; }
@@ -59,7 +59,7 @@ public class Player_Movement : MonoBehaviour
             verticalVelocity = jumpStrength;
         }
 
-        Vector3 playerMovement = new Vector3(forwardMovement, verticalVelocity, sidewaysMovement);
+        Vector3 playerMovement = new Vector3(sidewaysMovement, verticalVelocity, forwardMovement);
         //Poruszanie bohaterem
         cc.Move(transform.rotation * playerMovement * Time.deltaTime);
     }
