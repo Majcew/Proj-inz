@@ -32,7 +32,7 @@ public class Health : MonoBehaviour
     {
         /* 
             Instrukcja odpowiedzialna za śmierć postaci/przeciwnika.
-         */
+        */
     }
 
     public void HealHealth(float value)
