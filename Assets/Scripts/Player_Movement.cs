@@ -21,8 +21,8 @@ public class Player_Movement : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()
