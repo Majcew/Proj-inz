@@ -21,17 +21,17 @@ public class Player_Movement : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()
     {
-        //Rozglądanie się na boki
+        //Rozglądanie się na góra dół (nie działa)
         float horizontalRotation = Input.GetAxis("Mouse X");
         transform.Rotate(0, horizontalRotation, 0);
 
-        //Rozglądanie się góra-dół
+        //Rozglądanie się na boki
         verticalRotation -= Input.GetAxis("Mouse Y");
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalRotationLimit, verticalRotationLimit);
         Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
