@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Runtime.InteropServices;
+using UnityEngine;
 
 /* Komenda wymagająca podpięcie komponentu "PlaterController" w poprawnego działania skryptu*/
 [RequireComponent(typeof(CharacterController))]
@@ -18,6 +20,7 @@ public class Player_Movement : MonoBehaviour
     private float verticalVelocity;
     private float verticalRotation = 0;
     #endregion
+
     void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -59,6 +62,14 @@ public class Player_Movement : MonoBehaviour
             verticalVelocity = jumpStrength;
         }
 
+        Vector3 playerMovement = new Vector3(sidewaysMovement, verticalVelocity, forwardMovement);
+        //Poruszanie bohaterem
+        cc.Move(transform.rotation * playerMovement * Time.deltaTime);
+    }
+
+    public void TestFunc()
+    {
+        verticalRotation += 1;
         Vector3 playerMovement = new Vector3(sidewaysMovement, verticalVelocity, forwardMovement);
         //Poruszanie bohaterem
         cc.Move(transform.rotation * playerMovement * Time.deltaTime);
