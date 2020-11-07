@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: c9c954e3677395449892001a413b2676
+    path: Assets/Scenes/Menu.unity
+    guid: 511cdf5cd1e4ac943b4bcd4eef5fe12d
   - enabled: 1
     path: Assets/Scenes/FIrstScene.unity
     guid: a4cb06793661cb248b80dc0b7219a50f
@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PVP Map.unity
     guid: f78b180166345b94baa1b6e160a5c886
+  - enabled: 1
+    path: Assets/Scenes/MenuAuthors.unity
+    guid: 6a3e385e0a70ca04ab53e00d96c664d6
+  - enabled: 1
+    path: Assets/Scenes/MenuOptions.unity
+    guid: 97d7946b749c1df4e85d9de67ec98ade
   m_configObjects: {}
