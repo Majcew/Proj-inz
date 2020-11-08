@@ -1189,7 +1189,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1090258905}
         m_TargetAssemblyTypeName: MenuBehaviour, Assembly-CSharp
-        m_MethodName: PlayMulti
+        m_MethodName: PlaySingle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
