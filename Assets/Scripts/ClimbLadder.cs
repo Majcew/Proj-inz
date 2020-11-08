@@ -4,7 +4,7 @@ using System;
 public class ClimbLadder : MonoBehaviour
 {
     #region Variables
-    public GameObject playerOBJ;
+    public Player_Movement playerOBJ;
     public bool canClimb = false;
     public float speed = 1;
     #endregion
@@ -14,7 +14,7 @@ public class ClimbLadder : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             canClimb = true;
-            playerOBJ = other.gameObject;
+            playerOBJ = other.gameObject.GetComponent<Player_Movement>();
         }
     }
 
@@ -32,13 +32,14 @@ public class ClimbLadder : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                playerOBJ.transform.Translate(Vector3.up * Time.deltaTime * speed);
-                Console.WriteLine(Vector3.up * Time.deltaTime * speed);
+                playerOBJ.TestFunc();
+                //playerOBJ.transform.Translate(Vector3.up * Time.deltaTime * speed);
+                // Console.WriteLine(Vector3.up * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                playerOBJ.transform.Translate(Vector3.down * Time.deltaTime * speed);
-                Console.WriteLine(Vector3.down * Time.deltaTime * speed);
+                //playerOBJ.transform.Translate(Vector3.down * Time.deltaTime * speed);
+                //Console.WriteLine(Vector3.down * Time.deltaTime * speed);
             }
         }
     }
