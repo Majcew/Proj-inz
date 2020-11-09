@@ -4,11 +4,17 @@ using UnityEngine;
 public class Swing : MonoBehaviour
 {
     public Camera fpscam;
+    private Animator animator;
     public float fireRate;
     public float damage;
     float fireTimer;
     public AudioSource audioSource;
     public AudioClip swingSound;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
     void Update()
     {
         fireTimer += Time.deltaTime;
@@ -38,5 +44,6 @@ public class Swing : MonoBehaviour
                 enemyHealth.TakeDamage(damage);
             }
         }
+        animator.SetTrigger("Attack");
     }
 }

@@ -69,7 +69,6 @@ public class Shoot : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
             {
-                Debug.Log(hit.transform.name);
                 Target target = hit.transform.GetComponent<Target>();
                 if (target != null)
                 {
