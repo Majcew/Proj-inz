@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TurnOffRemotePlayer : NetworkBehaviour
+public class ControlPlayerRemote : NetworkBehaviour
 {
     // Start is called before the first frame update
     private void Start()
