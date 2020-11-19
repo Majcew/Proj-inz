@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Tutorial.unity
     guid: d6413518502c1774f8195ff7b67aed06
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/PVP Map.unity
     guid: f78b180166345b94baa1b6e160a5c886
   - enabled: 0
