@@ -1,56 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    #region Variables
-    public float maxHealth;
+    public Text healthText;
+    public Text healthTextNumber;
+    private Player_Movement playerspeeds;
+    private float originalWalkingSpeed;
+    private float originalRunningSpeed;
+    public float health;
+    public float maxHealth = 100f;
+    public Slider healthSlider;
 
-    float currentHealth;
-    bool isAlive = true;
-    #endregion
+    bool isDead;
 
     private void Awake()
     {
-        currentHealth = maxHealth;
-    }
-    public void TakeDamage(float value)
-    {
-        if (isAlive)
-        {
-            currentHealth -= value;
-        }
-        if (currentHealth <= 0)
-        {
-            isAlive = false;
-            currentHealth = 0; // Dla gui nie chcemy ujemnych wartości, dlatego tutaj jest 0
-        }
+        playerspeeds = GetComponent<Player_Movement>();
+        originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
+        originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
     }
 
-    private void Death()
+    public void CheckHP()
     {
-        /* 
-            Instrukcja odpowiedzialna za śmierć postaci/przeciwnika.
-        */
+        if (health <= 30)
+        {
+            playerspeeds.playerWalkingSpeed = originalWalkingSpeed * 0.3f;
+            playerspeeds.playerRunningSpeed = originalRunningSpeed * 0.3f;
+        }
+        if (health <= 60 && health > 30)
+        {
+            playerspeeds.playerWalkingSpeed = originalWalkingSpeed * 0.75f;
+            playerspeeds.playerRunningSpeed = originalRunningSpeed * 0.75f;
+        }
+        if (health > 60)
+        {
+            playerspeeds.playerWalkingSpeed = originalWalkingSpeed;
+            playerspeeds.playerRunningSpeed = originalRunningSpeed;
+        }
+
     }
 
-    public void HealHealth(float value)
+    void Start()
     {
-        // Procedura unikająca uleczenie postaci ponad max HP.
-        if(currentHealth + value < maxHealth)
-        {
-            currentHealth += value;
-        }
-        else
-        {
-            currentHealth = maxHealth;
-        }
+        // health = 100f;
+        health = maxHealth;
+
+        SetHealthText();
     }
 
-    private void LateUpdate()
+    public void SetHealthText()
     {
-        // Sprawdzamy co fps czy postać żyje. Jeżeli nie to wywołujemy procedurę śmierci.
-        if (!isAlive) Death();
+        //healthText.text = "Lives: " + health.ToString();
+        healthTextNumber.text = health.ToString();
+        healthSlider.value = health;
+    }
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+        if (health <= 0 && !isDead)
+        {
+            isDead = true;
+            health = 0;
+        }
+        SetHealthText();
+        CheckHP();
     }
 }
