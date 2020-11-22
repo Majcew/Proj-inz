@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 253516677}
   m_Layer: 5
   m_Name: InputField
-  m_TagString: multi_settings_join_opt
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
