@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ak47
+  - shotgun
+  - revolver
+  - multi_settings_join_opt
   layers:
   - Default
   - TransparentFX
