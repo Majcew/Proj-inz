@@ -7,7 +7,6 @@ TagManager:
   - ak47
   - shotgun
   - revolver
-  - multi_settings_join_opt
   layers:
   - Default
   - TransparentFX
@@ -18,7 +17,7 @@ TagManager:
   - 
   - 
   - Utilities
-  - 
+  - Model
   - 
   - 
   - 
