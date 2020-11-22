@@ -38,6 +38,21 @@ namespace Mirror
             manager = GetComponent<NetworkManager>();
         }
 
+        void Start()
+        {
+            switch(PlayerPrefs.GetInt("start_action_mode"))
+            {
+                case 1:
+                     manager.StartHost();
+                    break;
+                case 2:
+                    manager.networkAddress = PlayerPrefs.GetString("network_address");
+                    manager.StartClient();
+                    break;
+
+            }
+        }
+
         void OnGUI()
         {
             if (!showGUI)
