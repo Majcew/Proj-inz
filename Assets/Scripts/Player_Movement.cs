@@ -8,6 +8,7 @@ public class Player_Movement : MonoBehaviour
 {
     #region Variables
     private CharacterController cc;
+    private Animator animator;
 
     /* Zmienne odpowiedzialne za prędkość gracza podczas chodzenia, biegania, "siła" skoku*/
     public float playerWalkingSpeed = 5f;
@@ -24,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
