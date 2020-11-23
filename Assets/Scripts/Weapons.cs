@@ -4,6 +4,7 @@ public class Weapons : MonoBehaviour
 {
     [Header("Add the weapons")]
     public GameObject[] weaponobj;
+    public GameObject[] modelwep;
     [Header("The state of the weapons")]
     public bool[] isActive;
 
@@ -13,11 +14,16 @@ public class Weapons : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        foreach (GameObject model in modelwep)
+        {
+            model.SetActive(false);
+        }
         foreach (bool value in isActive)
         {
             value.Equals(false);
         }
         weaponobj[1].SetActive(true);
+        modelwep[1].SetActive(true);
         isActive[1] = true;
     }
 
@@ -28,30 +34,35 @@ public class Weapons : MonoBehaviour
         {
             ImportantFunction();
             weaponobj[0].SetActive(true);
+            modelwep[0].SetActive(true);
             isActive[0] = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !isActive[1])
         {
             ImportantFunction();
             weaponobj[1].SetActive(true);
+            modelwep[1].SetActive(true);
             isActive[1] = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0) && !isActive[2])
         {
             ImportantFunction();
             weaponobj[2].SetActive(true);
+            modelwep[2].SetActive(true);
             isActive[2] = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[3])
         {
             ImportantFunction();
             weaponobj[3].SetActive(true);
+            modelwep[3].SetActive(true);
             isActive[3] = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[4])
         {
             ImportantFunction();
             weaponobj[4].SetActive(true);
+            modelwep[4].SetActive(true);
             isActive[4] = true;
         }
     }
@@ -60,6 +71,10 @@ public class Weapons : MonoBehaviour
         foreach (GameObject elem in weaponobj)
         {
             elem.SetActive(false);
+        }
+        foreach (GameObject model in modelwep)
+        {
+            model.SetActive(false);
         }
         for (int i = 0; i < isActive.Length; i++)
         {
