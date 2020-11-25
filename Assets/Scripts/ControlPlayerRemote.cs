@@ -9,11 +9,34 @@ public class ControlPlayerRemote : NetworkBehaviour
     {
         string id = string.Format("{0}", this.netId);
         Player_Movement scr = this.GetComponent<Player_Movement>();
+        Camera cam = this.GetComponentInChildren<Camera>();
+        GameObject wepcam = GameObject.Find("WeaponCamera");
+
+        if (this.isLocalPlayer)
+        {
+            wepcam.SetActive(true);
+            cam.enabled = true;
+            scr.enabled = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            wepcam.SetActive(false);
+            cam.enabled = false;
+            scr.enabled = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        /*string id = string.Format("{0}", this.netId);
+        Player_Movement scr = this.GetComponent<Player_Movement>();
         Health health = this.GetComponent<Health>();
         Weapons wpn = this.GetComponent<Weapons>();
         Ammunition ammo = this.GetComponent<Ammunition>();
         Animator anim = this.GetComponent<Animator>();
         Camera cam = this.GetComponentInChildren<Camera>();
+        GameObject gui = GameObject.Find("UI");
         GameObject wepcam = GameObject.Find("WeaponCamera");
         GameObject modelwep = GameObject.Find("PlayerModelWeapons");
         GameObject model = GameObject.Find("Geo");
@@ -21,8 +44,9 @@ public class ControlPlayerRemote : NetworkBehaviour
         if (this.isLocalPlayer)
         {
             wepcam.SetActive(true);
-            modelwep.SetActive(false);
-            model.SetActive(false);
+            modelwep.layer = 9;
+            model.layer = 9;
+            gui.SetActive(true);
             cam.enabled = true;
             scr.enabled = true;
             health.enabled = true;
@@ -35,8 +59,7 @@ public class ControlPlayerRemote : NetworkBehaviour
         else
         {
             wepcam.SetActive(false);
-            modelwep.SetActive(true);
-            model.SetActive(true);
+            gui.SetActive(false);
             ammo.enabled = false;
             health.enabled = false;
             cam.enabled = false;
@@ -45,6 +68,6 @@ public class ControlPlayerRemote : NetworkBehaviour
             anim.enabled = false;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-        }
+        }*/
     }
 }

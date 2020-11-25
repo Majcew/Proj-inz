@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class Weapons : MonoBehaviour
+public class Weapons : NetworkBehaviour
 {
     [Header("Add the weapons")]
     public GameObject[] weaponobj;
@@ -8,28 +9,32 @@ public class Weapons : MonoBehaviour
     [Header("The state of the weapons")]
     public bool[] isActive;
 
-    private void Awake()
+    private void Start()
     {
-        foreach (GameObject obj in weaponobj)
+        if (isLocalPlayer)
         {
-            obj.SetActive(false);
+            foreach (GameObject obj in weaponobj)
+            {
+                obj.SetActive(false);
+            }
+            foreach (GameObject model in modelwep)
+            {
+                model.SetActive(false);
+            }
+            foreach (bool value in isActive)
+            {
+                value.Equals(false);
+            }
+            weaponobj[1].SetActive(true);
+            modelwep[1].SetActive(true);
+            isActive[1] = true;
         }
-        foreach (GameObject model in modelwep)
-        {
-            model.SetActive(false);
-        }
-        foreach (bool value in isActive)
-        {
-            value.Equals(false);
-        }
-        weaponobj[1].SetActive(true);
-        modelwep[1].SetActive(true);
-        isActive[1] = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) { return; }
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isActive[0])
         {
             ImportantFunction();
