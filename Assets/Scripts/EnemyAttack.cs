@@ -10,14 +10,14 @@ public class EnemyAttack : MonoBehaviour
     Animator anim;
     GameObject player;
 
-    Health playerHealth;
+    Health health;
     EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerHealth = player.GetComponent<Health>();
+        health = player.GetComponent<Health>();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
     }
@@ -51,7 +51,7 @@ public class EnemyAttack : MonoBehaviour
         {
             Attack();
         }
-        if (playerHealth.health <= 0)
+        if (health.health <= 0)
         {
             //event do zmianyyy animacji
             anim.SetTrigger("PlayerDead");
@@ -63,9 +63,9 @@ public class EnemyAttack : MonoBehaviour
         timer = 0f;
         //event do zmiany animacji
         anim.SetTrigger("AttackPlayer");
-        if (playerHealth.health > 0)
+        if (health.health > 0)
         {
-            playerHealth.TakeDamage(attackDamage);
+            health.TakeDamage(attackDamage);
         }
     }
 }
