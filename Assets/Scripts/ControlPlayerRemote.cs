@@ -1,20 +1,29 @@
 ﻿using Mirror;
+using System;
 using UnityEngine;
 
 public class ControlPlayerRemote : NetworkBehaviour
 {
+     public Behaviour[] all;
     // Start is called before the first frame update
     private void Start()
     {
-        Camera cam = this.GetComponentInChildren<Camera>();
+        //Camera cam = this.GetComponentInChildren<Camera>();
+       
+        //String[] allowed = ["Mirror.TelepathyTransport"];
 
-        if (this.isLocalPlayer)
+        if (!this.isLocalPlayer)
         {
-            cam.enabled = true;
-        } else
-        {
-            cam.enabled = false;
-        }
+            foreach(Behaviour i in all){
+            Debug.Log("comp : " + i + "type : " + i.GetType());
+               //if(i.GetType().ToString() != "Mirror.TelepathyTransport" && i.GetType().ToString() != "Mirror.NetworkIdentity" && i.GetType().ToString() != "Mirror.NetworkTransform"){
+                    i.enabled = false;
+                //}else{
+               // Debug.Log("tele skiped!!");}
+               
+            }
+           // cam.enabled = true;
+        } 
 
         /*string id = string.Format("{0}", this.netId);
         Health health = this.GetComponent<Health>();
