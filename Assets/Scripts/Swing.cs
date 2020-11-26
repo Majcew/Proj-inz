@@ -38,7 +38,7 @@ public class Swing : MonoBehaviour
                 target.TakeDamage(damage);
             }
             Debug.Log(hit.transform.name);
-            EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
+            Health enemyHealth = hit.transform.GetComponent<Health>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
