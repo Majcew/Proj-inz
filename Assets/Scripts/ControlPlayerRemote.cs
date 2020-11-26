@@ -1,13 +1,22 @@
 ﻿using Mirror;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class ControlPlayerRemote : NetworkBehaviour
 {
     // Start is called before the first frame update
     private void Start()
     {
-        string id = string.Format("{0}", this.netId);
+        Camera cam = this.GetComponentInChildren<Camera>();
+
+        if (this.isLocalPlayer)
+        {
+            cam.enabled = true;
+        } else
+        {
+            cam.enabled = false;
+        }
+
+        /*string id = string.Format("{0}", this.netId);
         Health health = this.GetComponent<Health>();
         Weapons wpn = this.GetComponent<Weapons>();
         Ammunition ammo = this.GetComponent<Ammunition>();
@@ -36,6 +45,6 @@ public class ControlPlayerRemote : NetworkBehaviour
             wpn.enabled = false;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-        }
+        }*/
     }
 }

@@ -4,30 +4,22 @@ using Mirror;
 public class Weapons : NetworkBehaviour
 {
     [Header("Add the weapons")]
-    public GameObject[] weaponobj;
-    public GameObject[] modelwep;
+    [SerializeField]
+    private GameObject[] weaponobj;
+    [SerializeField]
+    private GameObject[] modelwep;
     [Header("The state of the weapons")]
-    public bool[] isActive;
+    [SerializeField]
+    private bool[] isActive;
 
     private void Start()
     {
         if (isLocalPlayer)
         {
-            foreach (GameObject obj in weaponobj)
-            {
-                obj.SetActive(false);
-            }
-            foreach (GameObject model in modelwep)
-            {
-                model.SetActive(false);
-            }
-            foreach (bool value in isActive)
-            {
-                value.Equals(false);
-            }
-            weaponobj[1].SetActive(true);
-            modelwep[1].SetActive(true);
-            isActive[1] = true;
+            //Transform[] weapons = this.GetComponentInChildren<Camera>().GetComponentsInChildren<Transform>();
+            weaponobj[0].SetActive(true);
+            modelwep[0].SetActive(false);
+            isActive[0] = true;
         }
     }
 

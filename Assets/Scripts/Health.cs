@@ -61,6 +61,5 @@ public class Health : NetworkBehaviour
             health = 0;
         }
         SetHealthText();
-        CheckHP();
     }
 }
