@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
 
-public class Ammunition : NetworkBehaviour
+public class Ammunition : MonoBehaviour
 {
     [Header("Limit the amount of ammunition in the magazine")]
     public int[] bulletsPerMag;

@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class Shoot : MonoBehaviour
+public class Shoot : NetworkBehaviour
 {
     private int id;
     public Camera fpscam;
-    public float fireRate = 0.1f;
-    public float damage = 10f;
+    public Animator animator;
+    public float[] fireRates;
+    public float[] damages;
     float fireTimer;
     private Ammunition ammoInfo;
-    public AudioSource audiosource;
-    public AudioClip shootingsound;
+    public AudioSource[] audiosources;
+    public AudioClip[] shootingsounds;
     private void Awake()
     {
-        ammoInfo = GetComponentInParent<Ammunition>();
+        ammoInfo = GetComponent<Ammunition>();
         id = GetCurrentId();
     }
     private void OnEnable()
@@ -23,32 +25,27 @@ public class Shoot : MonoBehaviour
     }
     private int GetCurrentId()
     {
-        switch (gameObject.tag)
-        {
-            case "ak47":
-                id = 0;
-                break;
-            case "revolver":
-                id = 1;
-                break;
-            case "shotgun":
-                id = 2;
-                break;
-            default:
-                id = -1;
-                break;
+       if (id == null){
+            id = 0;
         }
         return id;
     }
-
     private void ShowAmmoLeft()
     {
         ammoInfo.ShowAmmoLeft(id);
     }
+
+    public void SetGunId(int id)
+    {
+        this.id = id;
+         ShowAmmoInMag();
+         ShowAmmoLeft();
+
+    }
     void Update()
     {
         fireTimer += Time.deltaTime;
-        if (Input.GetButton("Fire1") && fireTimer > fireRate)
+        if (Input.GetButton("Fire1") && fireTimer > fireRates[id])
         {
             ShootBullet();
             fireTimer = 0;
@@ -62,23 +59,70 @@ public class Shoot : MonoBehaviour
 
     private void ShootBullet()
     {
-        if (ammoInfo.bulletsInMag[id] != 0)
+        if (ammoInfo.bulletsInMag[id] != 0 || id == 0)
         {
             ammoInfo.bulletsInMag[id]--;
-            audiosource.PlayOneShot(shootingsound);
+            audiosources[id].PlayOneShot(shootingsounds[id]);
             RaycastHit hit;
-            if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
+            switch(id)
             {
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null)
-                {
-                    target.TakeDamage(damage);
-                }
-                Debug.Log(hit.transform.name);
+                case 0 : // Miecz
+                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit,0.75f))
+                     {
+                        Target target = hit.transform.GetComponent<Target>();
+                        if (target != null)
+                        {
+                            target.TakeDamage(damages[id]);
+                        }
+                        CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                     }
+                    animator.SetTrigger("Attack");
+                    break;
+                case 3 : // Shotgun
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Vector3 spread = new Vector3();
+                        Vector3 direction = fpscam.transform.forward;
+                        spread += fpscam.transform.up * Random.Range(-1.5f, 1.5f);
+                        spread += fpscam.transform.right * Random.Range(-1.5f, 1.5f);
+                        direction += spread.normalized * Random.Range(0f, 0.2f);
+                        if (Physics.Raycast(fpscam.transform.position, direction, out hit, 25.0f))
+                        {
+                            Debug.DrawLine(fpscam.transform.position, hit.point, Color.green, 3.0f);
+                            Target target = hit.transform.GetComponent<Target>();
+                            if (target != null)
+                            {
+                                target.TakeDamage(damages[id]);
+                            }
+
+                            CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                        }   
+                        else Debug.DrawRay(fpscam.transform.position, direction, Color.red, 3.0f);
+                    }
+                    break;
+                default :
+                    if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
+                    {
+                        Target target = hit.transform.GetComponent<Target>();
+                        if (target != null)
+                        {
+                            target.TakeDamage(damages[id]);
+                        }
+                        CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                    }
+                    break;
             }
+            
             ShowAmmoInMag();
         }
     }
+
+    [Command]
+    private void CmdShootBullet(string shooter_name, string target_name, float damege)
+    {
+         Debug.Log(shooter_name + " trafil " + target_name + " i zabral " + damege.ToString() + "dm");
+    }
+
     private void ReloadMag()
     {
         int amountToReload = ammoInfo.bulletsPerMag[id] - ammoInfo.bulletsInMag[id];
