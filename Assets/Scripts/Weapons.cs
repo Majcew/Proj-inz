@@ -8,6 +8,9 @@ public class Weapons : NetworkBehaviour
     private GameObject[] weaponobj;
     [SerializeField]
     private GameObject[] modelwep;
+    [Header("Add the shot script")]
+    [SerializeField]
+    private Shoot shootScriptObj;
     [Header("The state of the weapons")]
     [SerializeField]
     private bool[] isActive;
@@ -17,6 +20,8 @@ public class Weapons : NetworkBehaviour
         weaponobj[0].SetActive(true);
             modelwep[0].SetActive(true);
             isActive[0] = true;
+        shootScriptObj.SetGunId(0);
+
         if (isLocalPlayer){
             //Transform[] weapons = this.GetComponentInChildren<Camera>().GetComponentsInChildren<Transform>();
            
@@ -65,6 +70,7 @@ public class Weapons : NetworkBehaviour
             weaponobj[0].SetActive(true);
             modelwep[0].SetActive(true);
             isActive[0] = true;
+            shootScriptObj.SetGunId(0);
             CmdSetEnemyWepon(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !isActive[1])
@@ -73,31 +79,35 @@ public class Weapons : NetworkBehaviour
             weaponobj[1].SetActive(true);
             modelwep[1].SetActive(true);
             isActive[1] = true;
+            shootScriptObj.SetGunId(1);
             CmdSetEnemyWepon(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha0) && !isActive[2])
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[2])
         {
             ImportantFunction();
             weaponobj[2].SetActive(true);
             modelwep[2].SetActive(true);
             isActive[2] = true;
+            shootScriptObj.SetGunId(2);
             CmdSetEnemyWepon(2);
 
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[3])
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[3])
         {
             ImportantFunction();
             weaponobj[3].SetActive(true);
             modelwep[3].SetActive(true);
             isActive[3] = true;
+            shootScriptObj.SetGunId(3);
             CmdSetEnemyWepon(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[4])
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && !isActive[4])
         {
             ImportantFunction();
             weaponobj[4].SetActive(true);
             modelwep[4].SetActive(true);
             isActive[4] = true;
+            shootScriptObj.SetGunId(4);
             CmdSetEnemyWepon(4);
         }
     }

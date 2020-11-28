@@ -15,7 +15,7 @@ public class ControlPlayerRemote : NetworkBehaviour
         if (!this.isLocalPlayer)
         {
             foreach(Behaviour i in all){
-            Debug.Log("comp : " + i + "type : " + i.GetType());
+           // Debug.Log("comp : " + i + "type : " + i.GetType());
                //if(i.GetType().ToString() != "Mirror.TelepathyTransport" && i.GetType().ToString() != "Mirror.NetworkIdentity" && i.GetType().ToString() != "Mirror.NetworkTransform"){
                     i.enabled = false;
                 //}else{
@@ -25,6 +25,7 @@ public class ControlPlayerRemote : NetworkBehaviour
            // cam.enabled = true;
         } 
 
+        this.transform.name = "Player" + this.netId;
         /*string id = string.Format("{0}", this.netId);
         Health health = this.GetComponent<Health>();
         Weapons wpn = this.GetComponent<Weapons>();
