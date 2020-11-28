@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Mirror;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class Health : NetworkBehaviour
 {
     public Text healthText;
     public Text healthTextNumber;
@@ -14,11 +14,16 @@ public class Health : MonoBehaviour
 
     bool isDead;
 
-    private void Awake()
+    private void Start()
     {
-        playerspeeds = GetComponent<Player_Movement>();
-        originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
-        originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
+        if (isLocalPlayer)
+        {
+            playerspeeds = GetComponent<Player_Movement>();
+            originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
+            originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
+            health = maxHealth;
+            SetHealthText();
+        }
     }
 
     public void CheckHP()
@@ -41,14 +46,6 @@ public class Health : MonoBehaviour
 
     }
 
-    void Start()
-    {
-        // health = 100f;
-        health = maxHealth;
-
-        SetHealthText();
-    }
-
     public void SetHealthText()
     {
         //healthText.text = "Lives: " + health.ToString();
@@ -64,6 +61,5 @@ public class Health : MonoBehaviour
             health = 0;
         }
         SetHealthText();
-        CheckHP();
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
+﻿using UnityEngine;
+using Mirror;
 
 /* Komenda wymagająca podpięcie komponentu "PlaterController" w poprawnego działania skryptu*/
 [RequireComponent(typeof(CharacterController))]
-public class Player_Movement : MonoBehaviour
+public class Player_Movement : NetworkBehaviour
 {
     #region Variables
     private CharacterController cc;
@@ -22,16 +21,24 @@ public class Player_Movement : MonoBehaviour
     private float verticalRotation = 0;
     #endregion
 
-    void Awake()
+    void Start()
     {
-        cc = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("isLocalPlayer " + isLocalPlayer);
+        if (isLocalPlayer)
+        {
+            cc = GetComponent<CharacterController>();
+            animator = GetComponent<Animator>();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
     }
 
     void LateUpdate()
     {
+        if (!isLocalPlayer) { 
+            return; 
+        }
         //Rozglądanie się na góra dół (nie działa)
         float horizontalRotation = Input.GetAxis("Mouse X");
         transform.Rotate(0, horizontalRotation, 0);
