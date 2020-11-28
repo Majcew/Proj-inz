@@ -67,27 +67,18 @@ public class Weapons : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isActive[0])
         {
             ImportantFunction();
-            weaponobj[0].SetActive(true);
-            modelwep[0].SetActive(true);
-            isActive[0] = true;
             shootScriptObj.SetGunId(0);
             CmdSetEnemyWepon(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !isActive[1])
         {
             ImportantFunction();
-            weaponobj[1].SetActive(true);
-            modelwep[1].SetActive(true);
-            isActive[1] = true;
             shootScriptObj.SetGunId(1);
             CmdSetEnemyWepon(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[2])
         {
             ImportantFunction();
-            weaponobj[2].SetActive(true);
-            modelwep[2].SetActive(true);
-            isActive[2] = true;
             shootScriptObj.SetGunId(2);
             CmdSetEnemyWepon(2);
 
@@ -95,18 +86,12 @@ public class Weapons : NetworkBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[3])
         {
             ImportantFunction();
-            weaponobj[3].SetActive(true);
-            modelwep[3].SetActive(true);
-            isActive[3] = true;
             shootScriptObj.SetGunId(3);
             CmdSetEnemyWepon(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5) && !isActive[4])
         {
             ImportantFunction();
-            weaponobj[4].SetActive(true);
-            modelwep[4].SetActive(true);
-            isActive[4] = true;
             shootScriptObj.SetGunId(4);
             CmdSetEnemyWepon(4);
         }

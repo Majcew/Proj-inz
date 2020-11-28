@@ -8,10 +8,12 @@ public class Health : NetworkBehaviour
     private Player_Movement playerspeeds;
     private float originalWalkingSpeed;
     private float originalRunningSpeed;
+    [SyncVar]
     public float health;
     public float maxHealth = 100f;
     public Slider healthSlider;
 
+    [SyncVar]
     bool isDead;
 
     private void Start()
@@ -22,7 +24,7 @@ public class Health : NetworkBehaviour
             originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
             originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
             health = maxHealth;
-            SetHealthText();
+            CmdSetHealthText();
         }
     }
 
@@ -46,13 +48,21 @@ public class Health : NetworkBehaviour
 
     }
 
-    public void SetHealthText()
+    [Command]
+    public void CmdSetHealthText()
+    {
+        RpcSetHealthText();
+    }
+
+    [ClientRpc]
+    void RpcSetHealthText()
     {
         //healthText.text = "Lives: " + health.ToString();
         healthTextNumber.text = health.ToString();
         healthSlider.value = health;
     }
-    public void TakeDamage(float amount)
+    [ClientRpc]
+    public void RpcTakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0 && !isDead)
@@ -60,6 +70,14 @@ public class Health : NetworkBehaviour
             isDead = true;
             health = 0;
         }
-        SetHealthText();
+        CmdSetHealthText();
+    }
+
+    private void Update()
+    {
+        if (isDead)
+        {
+            Destroy(gameObject);
+        }
     }
 }

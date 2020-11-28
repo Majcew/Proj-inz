@@ -25,7 +25,8 @@ public class Shoot : NetworkBehaviour
     }
     private int GetCurrentId()
     {
-       if (id == null){
+        if (id == null)
+        {
             id = 0;
         }
         return id;
@@ -38,8 +39,8 @@ public class Shoot : NetworkBehaviour
     public void SetGunId(int id)
     {
         this.id = id;
-         ShowAmmoInMag();
-         ShowAmmoLeft();
+        ShowAmmoInMag();
+        ShowAmmoLeft();
 
     }
     void Update()
@@ -55,8 +56,6 @@ public class Shoot : NetworkBehaviour
             ReloadMag();
         }
     }
-
-
     private void ShootBullet()
     {
         if (ammoInfo.bulletsInMag[id] != 0 || id == 0)
@@ -64,21 +63,23 @@ public class Shoot : NetworkBehaviour
             ammoInfo.bulletsInMag[id]--;
             audiosources[id].PlayOneShot(shootingsounds[id]);
             RaycastHit hit;
-            switch(id)
+            switch (id)
             {
-                case 0 : // Miecz
-                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit,0.75f))
-                     {
+                case 0: // Miecz
+                    if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit, 0.75f))
+                    {
                         Target target = hit.transform.GetComponent<Target>();
                         if (target != null)
                         {
                             target.TakeDamage(damages[id]);
                         }
+                        //Health player = hit.transform.GetComponent<Health>();
+                        //if (player != null) player.RpcTakeDamage(damages[id]);
                         CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
-                     }
+                    }
                     animator.SetTrigger("Attack");
                     break;
-                case 3 : // Shotgun
+                case 3: // Shotgun
                     for (int i = 0; i < 8; i++)
                     {
                         Vector3 spread = new Vector3();
@@ -94,13 +95,14 @@ public class Shoot : NetworkBehaviour
                             {
                                 target.TakeDamage(damages[id]);
                             }
-
+                            //Health player = hit.transform.GetComponent<Health>();
+                            //if (player != null) player.RpcTakeDamage(damages[id]);
                             CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
-                        }   
+                        }
                         else Debug.DrawRay(fpscam.transform.position, direction, Color.red, 3.0f);
                     }
                     break;
-                default :
+                default:
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         Target target = hit.transform.GetComponent<Target>();
@@ -108,19 +110,21 @@ public class Shoot : NetworkBehaviour
                         {
                             target.TakeDamage(damages[id]);
                         }
+                        //Health player = hit.transform.GetComponent<Health>();
+                        //if (player != null) player.RpcTakeDamage(damages[id]);
                         CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
                     }
                     break;
             }
-            
+
             ShowAmmoInMag();
         }
     }
 
     [Command]
-    private void CmdShootBullet(string shooter_name, string target_name, float damege)
+    private void CmdShootBullet(string shooter_name, string target_name, float damage)
     {
-         Debug.Log(shooter_name + " trafil " + target_name + " i zabral " + damege.ToString() + "dm");
+        Debug.Log(shooter_name + " trafil " + target_name + " i zabral " + damage.ToString() + "dm");
     }
 
     private void ReloadMag()
