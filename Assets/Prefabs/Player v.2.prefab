@@ -374,7 +374,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ce25342a9e0aaa04eb8d4a04d4eb0cbd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2154,11 +2154,11 @@ MonoBehaviour:
   - {fileID: 210214653410604748}
   - {fileID: 2840956604994335332}
   shootingsounds:
+  - {fileID: 8300000, guid: 09d7836894bd5f240bf042f16b4c024a, type: 3}
+  - {fileID: 8300000, guid: 72afa048bb216914489aff878a51f62c, type: 3}
   - {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
-  - {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
-  - {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
-  - {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
-  - {fileID: 8300000, guid: acae6ae2dfb11a74ca96df86ae1590fd, type: 3}
+  - {fileID: 8300000, guid: 1552f211457317e47a9c4ab7186c8b8b, type: 3}
+  - {fileID: 8300000, guid: 79dbcaab2dc3d8d49a86eef346ae7a2d, type: 3}
 --- !u!114 &835248121229575197
 MonoBehaviour:
   m_ObjectHideFlags: 0
