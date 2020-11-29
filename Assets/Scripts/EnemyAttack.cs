@@ -64,7 +64,7 @@ public class EnemyAttack : NetworkBehaviour
         anim.SetTrigger("AttackPlayer");
         if (health.health > 0)
         {
-            health.RpcTakeDamage(attackDamage);
+            health.RcpTakeDamage(attackDamage);
         }
     }
 }

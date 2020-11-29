@@ -68,14 +68,11 @@ public class Shoot : NetworkBehaviour
                 case 0: // Miecz
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit, 0.75f))
                     {
-                        Target target = hit.transform.GetComponent<Target>();
-                        if (target != null)
+                        NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
+                        if (netIdentity != null)
                         {
-                            target.TakeDamage(damages[id]);
-                        }
-                        //Health player = hit.transform.GetComponent<Health>();
-                        //if (player != null) player.RpcTakeDamage(damages[id]);
-                        CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                            CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
+                        }                         
                     }
                     animator.SetTrigger("Attack");
                     break;
@@ -90,14 +87,12 @@ public class Shoot : NetworkBehaviour
                         if (Physics.Raycast(fpscam.transform.position, direction, out hit, 25.0f))
                         {
                             Debug.DrawLine(fpscam.transform.position, hit.point, Color.green, 3.0f);
-                            Target target = hit.transform.GetComponent<Target>();
-                            if (target != null)
+                            NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
+                            if (netIdentity != null)
                             {
-                                target.TakeDamage(damages[id]);
+                               CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                             }
-                            //Health player = hit.transform.GetComponent<Health>();
-                            //if (player != null) player.RpcTakeDamage(damages[id]);
-                            CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                          
                         }
                         else Debug.DrawRay(fpscam.transform.position, direction, Color.red, 3.0f);
                     }
@@ -105,14 +100,11 @@ public class Shoot : NetworkBehaviour
                 default:
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
-                        Target target = hit.transform.GetComponent<Target>();
-                        if (target != null)
+                        NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
+                        if (netIdentity != null)
                         {
-                            target.TakeDamage(damages[id]);
-                        }
-                        //Health player = hit.transform.GetComponent<Health>();
-                        //if (player != null) player.RpcTakeDamage(damages[id]);
-                        CmdShootBullet(this.transform.name, hit.transform.name, damages[id]);
+                           CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
+                        }                     
                     }
                     break;
             }
@@ -122,9 +114,10 @@ public class Shoot : NetworkBehaviour
     }
 
     [Command]
-    private void CmdShootBullet(string shooter_name, string target_name, float damage)
+    private void CmdShootBullet(string netId, float damage)
     {
-        Debug.Log(shooter_name + " trafil " + target_name + " i zabral " + damage.ToString() + "dm");
+        Debug.Log("CmdShootBullet: netId: " + netId + " damage: " + damage);
+        GameManager.GetPlayerHealth(netId).RcpTakeDamage(damage);
     }
 
     private void ReloadMag()
