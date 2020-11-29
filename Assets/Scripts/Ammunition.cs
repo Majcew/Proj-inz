@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class Ammunition : MonoBehaviour
+public class Ammunition : NetworkBehaviour
 {
     [Header("Limit the amount of ammunition in the magazine")]
     public int[] bulletsPerMag;
@@ -18,10 +19,12 @@ public class Ammunition : MonoBehaviour
     {
         overallammoText.text = bulletsLeft[id].ToString();
     }
+
     public void ShowAmmoInMag(int id)
     {
         ammoinmagText.text = bulletsInMag[id].ToString();
     }
+
     public void AddAmmunition(int id, int value)
     {
         bulletsLeft[id] += value;

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Mirror;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAttack : NetworkBehaviour
 {
     public float timeBetweenAttacks = 0.5f;
     public float attackDamage = 10f;
@@ -49,7 +48,7 @@ public class EnemyAttack : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
         {
-            Attack();
+            CmdAttack();
         }
         if (health.health <= 0)
         {
@@ -57,15 +56,15 @@ public class EnemyAttack : MonoBehaviour
             anim.SetTrigger("PlayerDead");
         }
     }
-
-    void Attack()
+    [Command]
+    void CmdAttack()
     {
         timer = 0f;
         //event do zmiany animacji
         anim.SetTrigger("AttackPlayer");
         if (health.health > 0)
         {
-            health.TakeDamage(attackDamage);
+            health.RcpTakeDamage(attackDamage);
         }
     }
 }
