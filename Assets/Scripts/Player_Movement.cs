@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Range;
 using Mirror;
 
 /* Komenda wymagająca podpięcie komponentu "PlaterController" w poprawnego działania skryptu*/
@@ -47,6 +48,38 @@ public class Player_Movement : NetworkBehaviour
         verticalRotation -= Input.GetAxis("Mouse Y");
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalRotationLimit, verticalRotationLimit);
         Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+
+        switch (Input.GetAxis("Vertical"))
+        {
+            case float n when (n < 0 && n >= -1):
+                animator.SetBool("Run_backward", true);
+                animator.SetBool("Run_forward", false);
+                break;
+            case float n when (n > 0 && n <= 1):
+                animator.SetBool("Run_forward", true);
+                animator.SetBool("Run_backward", false);
+                break;
+            default:
+                animator.SetBool("Run_forward", false);
+                animator.SetBool("Run_forward", false);
+                break;
+        }
+
+        /*switch (Input.GetAxis("Horizontal"))
+        {
+            case float n when (n < 0 && n >= -1):
+                animator.SetBool("Run_left", true);
+                animator.SetBool("Run_right", false);
+                break;
+            case float n when (n > 0 && n <= 1):
+                animator.SetBool("Run_right", true);
+                animator.SetBool("Run_left", false);
+                break;
+            default:
+                animator.SetBool("Run_left", false);
+                animator.SetBool("Run_right", false);
+                break;
+        }*/
 
         //Poruszanie graczem (jeżeli ma kontakt z podłożem), w innym przypadku niech działa przyciąganie ziemskie
         if (cc.isGrounded)

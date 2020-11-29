@@ -3,17 +3,18 @@ using Mirror;
 
 public class Shoot : NetworkBehaviour
 {
+    private Animator animator;
     private int id;
     public Camera fpscam;
-    public Animator animator;
     public float[] fireRates;
     public float[] damages;
     float fireTimer;
     private Ammunition ammoInfo;
     public AudioSource[] audiosources;
     public AudioClip[] shootingsounds;
-    private void Awake()
+    private void Start()
     {
+        animator = GetComponent<Animator>();
         ammoInfo = GetComponent<Ammunition>();
         id = GetCurrentId();
     }
@@ -77,6 +78,7 @@ public class Shoot : NetworkBehaviour
                     animator.SetTrigger("Attack");
                     break;
                 case 3: // Shotgun
+                    animator.SetTrigger("Shoot");
                     for (int i = 0; i < 8; i++)
                     {
                         Vector3 spread = new Vector3();
@@ -98,6 +100,7 @@ public class Shoot : NetworkBehaviour
                     }
                     break;
                 default:
+                    animator.SetTrigger("Shoot");
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
@@ -122,6 +125,7 @@ public class Shoot : NetworkBehaviour
 
     private void ReloadMag()
     {
+        animator.SetTrigger("Reload");
         int amountToReload = ammoInfo.bulletsPerMag[id] - ammoInfo.bulletsInMag[id];
         if (ammoInfo.bulletsLeft[id] <= amountToReload && ammoInfo.bulletsLeft[id] != 0)
         {
