@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Range;
 using Mirror;
 
 /* Komenda wymagająca podpięcie komponentu "PlaterController" w poprawnego działania skryptu*/
@@ -61,7 +60,7 @@ public class Player_Movement : NetworkBehaviour
                 break;
             default:
                 animator.SetBool("Run_forward", false);
-                animator.SetBool("Run_forward", false);
+                animator.SetBool("Run_backward", false);
                 break;
         }
 
