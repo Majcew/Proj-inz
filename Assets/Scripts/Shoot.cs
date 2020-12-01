@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Mirror;
 
 public class Shoot : NetworkBehaviour
 {
+    private NetworkAnimator n_animator;
     private Animator animator;
     private int id;
     public Camera fpscam;
@@ -14,6 +16,7 @@ public class Shoot : NetworkBehaviour
     public AudioClip[] shootingsounds;
     private void Start()
     {
+        n_animator = GetComponent<NetworkAnimator>();
         animator = GetComponent<Animator>();
         ammoInfo = GetComponent<Ammunition>();
         id = GetCurrentId();
@@ -75,10 +78,10 @@ public class Shoot : NetworkBehaviour
                             CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                         }                         
                     }
-                    animator.SetTrigger("Attack");
+                    n_animator.animator.SetTrigger("Attack");
                     break;
                 case 3: // Shotgun
-                    animator.SetTrigger("Shoot");
+                    n_animator.animator.SetTrigger("Shoot");
                     for (int i = 0; i < 8; i++)
                     {
                         Vector3 spread = new Vector3();
@@ -100,7 +103,7 @@ public class Shoot : NetworkBehaviour
                     }
                     break;
                 default:
-                    animator.SetTrigger("Shoot");
+                    n_animator.animator.SetTrigger("Shoot");
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
@@ -125,7 +128,7 @@ public class Shoot : NetworkBehaviour
 
     private void ReloadMag()
     {
-        animator.SetTrigger("Reload");
+        n_animator.animator.SetTrigger("Reload");
         int amountToReload = ammoInfo.bulletsPerMag[id] - ammoInfo.bulletsInMag[id];
         if (ammoInfo.bulletsLeft[id] <= amountToReload && ammoInfo.bulletsLeft[id] != 0)
         {
