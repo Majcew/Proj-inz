@@ -2041,10 +2041,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerWalkingSpeed: 2
-  playerRunningSpeed: 4
-  jumpStrength: 5
-  verticalRotationLimit: 80
+  playerWalkingSpeed: 1
+  playerRunningSpeed: 1.5
+  jumpStrength: 3
+  verticalRotationLimit: 55
 --- !u!114 &7420108816562320315
 MonoBehaviour:
   m_ObjectHideFlags: 0

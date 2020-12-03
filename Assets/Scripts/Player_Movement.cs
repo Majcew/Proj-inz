@@ -64,21 +64,21 @@ public class Player_Movement : NetworkBehaviour
                 break;
         }
 
-        /*switch (Input.GetAxis("Horizontal"))
+        switch (Input.GetAxis("Horizontal"))
         {
             case float n when (n < 0 && n >= -1):
-                animator.SetBool("Run_left", true);
-                animator.SetBool("Run_right", false);
+                animator.SetBool("Walk_left", true);
+                animator.SetBool("Walk_right", false);
                 break;
             case float n when (n > 0 && n <= 1):
-                animator.SetBool("Run_right", true);
-                animator.SetBool("Run_left", false);
+                animator.SetBool("Walk_right", true);
+                animator.SetBool("Walk_left", false);
                 break;
             default:
-                animator.SetBool("Run_left", false);
-                animator.SetBool("Run_right", false);
+                animator.SetBool("Walk_left", false);
+                animator.SetBool("Walk_right", false);
                 break;
-        }*/
+        }
 
         //Poruszanie graczem (jeżeli ma kontakt z podłożem), w innym przypadku niech działa przyciąganie ziemskie
         if (cc.isGrounded)
