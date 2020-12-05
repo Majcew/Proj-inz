@@ -14,12 +14,14 @@ public class Weapons : NetworkBehaviour
     [Header("The state of the weapons")]
     [SerializeField]
     private bool[] isActive;
+    private NetworkAnimator n_animator;
 
     private void Start()
     {
+        n_animator = GetComponent<NetworkAnimator>();
         weaponobj[0].SetActive(true);
-            modelwep[0].SetActive(true);
-            isActive[0] = true;
+        modelwep[0].SetActive(true);
+        isActive[0] = true;
         shootScriptObj.SetGunId(0);
 
         if (isLocalPlayer){
@@ -92,6 +94,7 @@ public class Weapons : NetworkBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha5) && !isActive[4])
         {
             ImportantFunction();
+            n_animator.SetTrigger("Torch");
             shootScriptObj.SetGunId(4);
             CmdSetEnemyWepon(4);
         }

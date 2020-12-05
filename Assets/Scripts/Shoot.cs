@@ -5,7 +5,6 @@ using Mirror;
 public class Shoot : NetworkBehaviour
 {
     private NetworkAnimator n_animator;
-    private Animator animator;
     private int id;
     public Camera fpscam;
     public float[] fireRates;
@@ -17,7 +16,6 @@ public class Shoot : NetworkBehaviour
     private void Start()
     {
         n_animator = GetComponent<NetworkAnimator>();
-        animator = GetComponent<Animator>();
         ammoInfo = GetComponent<Ammunition>();
         id = GetCurrentId();
     }
@@ -78,10 +76,10 @@ public class Shoot : NetworkBehaviour
                             CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                         }                         
                     }
-                    n_animator.animator.SetTrigger("Attack");
+                    n_animator.SetTrigger("Attack");
                     break;
                 case 3: // Shotgun
-                    n_animator.animator.SetTrigger("Shoot");
+                    n_animator.SetTrigger("Shoot");
                     for (int i = 0; i < 8; i++)
                     {
                         Vector3 spread = new Vector3();
@@ -103,7 +101,7 @@ public class Shoot : NetworkBehaviour
                     }
                     break;
                 default:
-                    n_animator.animator.SetTrigger("Shoot");
+                    n_animator.SetTrigger("Shoot");
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
