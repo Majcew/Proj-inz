@@ -69,18 +69,21 @@ public class Weapons : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isActive[0])
         {
             ImportantFunction();
+            n_animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(0);
             CmdSetEnemyWepon(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !isActive[1])
         {
             ImportantFunction();
+            n_animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(1);
             CmdSetEnemyWepon(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[2])
         {
             ImportantFunction();
+            n_animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(2);
             CmdSetEnemyWepon(2);
 
@@ -88,6 +91,7 @@ public class Weapons : NetworkBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[3])
         {
             ImportantFunction();
+            n_animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(3);
             CmdSetEnemyWepon(3);
         }
