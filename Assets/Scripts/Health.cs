@@ -1,5 +1,7 @@
 ﻿using Mirror;
+using System;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
@@ -12,6 +14,8 @@ public class Health : NetworkBehaviour
     public float health;
     public float maxHealth = 100f;
     public Slider healthSlider;
+    [SerializeField]
+    private RespawnPlayer respawnPlayer;
 
     [SyncVar]
     bool isDead;
@@ -23,8 +27,7 @@ public class Health : NetworkBehaviour
             playerspeeds = GetComponent<Player_Movement>();
             originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
             originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
-            health = maxHealth;
-            SetHealthText();
+            respawnPlayer.Setup();
         }
     }
 
@@ -68,11 +71,22 @@ public class Health : NetworkBehaviour
         SetHealthText();
     }
 
+    public void ResetHealth()
+    {
+        isDead = false;
+        health = maxHealth;
+        SetHealthText();
+    }
+
     private void Update()
     {
         if (isDead)
         {
-            Destroy(gameObject);
+            respawnPlayer.disableBehaviourComponents();
+            Transform respPosRotData = NetworkManager.singleton.GetStartPosition();
+            this.transform.position = respPosRotData.position;
+            this.transform.rotation = respPosRotData.rotation;
+            respawnPlayer.enableBehaviourComponents();
         }
     }
 }

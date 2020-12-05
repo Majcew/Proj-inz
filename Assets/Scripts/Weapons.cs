@@ -18,8 +18,8 @@ public class Weapons : NetworkBehaviour
     private void Start()
     {
         weaponobj[0].SetActive(true);
-            modelwep[0].SetActive(true);
-            isActive[0] = true;
+        modelwep[0].SetActive(true);
+        isActive[0] = true;
         shootScriptObj.SetGunId(0);
 
         if (isLocalPlayer){
@@ -110,5 +110,15 @@ public class Weapons : NetworkBehaviour
         {
             isActive[i] = false;
         }
+    }
+
+    public void ResetWepon()
+    {
+        ImportantFunction();
+        weaponobj[0].SetActive(true);
+        modelwep[0].SetActive(true);
+        isActive[0] = true;
+        CmdSetEnemyWepon(0);
+        shootScriptObj.SetGunId(0);
     }
 }

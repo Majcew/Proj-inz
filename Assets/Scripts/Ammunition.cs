@@ -29,4 +29,9 @@ public class Ammunition : NetworkBehaviour
     {
         bulletsLeft[id] += value;
     }
+    public void ResetAmmunition()
+    {
+        bulletsPerMag.CopyTo(bulletsInMag, 0);
+        maxAmmoOverall.CopyTo(bulletsLeft, 0);
+    }
 }
