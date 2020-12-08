@@ -76,7 +76,7 @@ public class Shoot : NetworkBehaviour
                             CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                         }                         
                     }
-                    n_animator.SetTrigger("Attack");
+                    n_animator.SetTrigger("Sword_attack");
                     break;
                 case 3: // Shotgun
                     n_animator.SetTrigger("Shoot");
