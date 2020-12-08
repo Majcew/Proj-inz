@@ -15,6 +15,7 @@ public class ControlPlayerRemote : NetworkBehaviour
                     i.enabled = false;   
             }
         } 
+        GetComponent<RespawnPlayer>().Setup();
     }
 
     public override void OnStartClient()
