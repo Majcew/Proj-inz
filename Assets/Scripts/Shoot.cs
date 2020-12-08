@@ -74,7 +74,12 @@ public class Shoot : NetworkBehaviour
                         if (netIdentity != null)
                         {
                             CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
-                        }                         
+                        }
+                        EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
+                        if (enemy != null)
+                        {
+                            enemy.TakeDamage(damages[id]);
+                        }
                     }
                     n_animator.SetTrigger("Sword_attack");
                     break;
@@ -95,7 +100,12 @@ public class Shoot : NetworkBehaviour
                             {
                                CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                             }
-                          
+                            EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
+                            if (enemy != null)
+                            {
+                                enemy.TakeDamage(damages[id]);
+                            }
+
                         }
                         else Debug.DrawRay(fpscam.transform.position, direction, Color.red, 3.0f);
                     }
@@ -108,7 +118,12 @@ public class Shoot : NetworkBehaviour
                         if (netIdentity != null)
                         {
                            CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
-                        }                     
+                        }
+                        EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
+                        if (enemy != null)
+                        {
+                            enemy.TakeDamage(damages[id]);
+                        }
                     }
                     break;
             }
