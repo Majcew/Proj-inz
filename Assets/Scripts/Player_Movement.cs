@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
 
-/* Komenda wymagająca podpięcie komponentu "PlaterController" w poprawnego działania skryptu*/
+/* Komenda wymagająca podpięcie komponentu "PlayerController" w poprawnego działania skryptu*/
 [RequireComponent(typeof(CharacterController))]
 public class Player_Movement : NetworkBehaviour
 {
@@ -48,6 +48,38 @@ public class Player_Movement : NetworkBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -verticalRotationLimit, verticalRotationLimit);
         Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
+        switch (Input.GetAxis("Vertical"))
+        {
+            case float n when (n < 0 && n >= -1):
+                animator.SetBool("Walk_backward", true);
+                animator.SetBool("Walk_forward", false);
+                break;
+            case float n when (n > 0 && n <= 1):
+                animator.SetBool("Walk_forward", true);
+                animator.SetBool("Walk_backward", false);
+                break;
+            default:
+                animator.SetBool("Walk_forward", false);
+                animator.SetBool("Walk_backward", false);
+                break;
+        }
+
+        switch (Input.GetAxis("Horizontal"))
+        {
+            case float n when (n < 0 && n >= -1):
+                animator.SetBool("Walk_left", true);
+                animator.SetBool("Walk_right", false);
+                break;
+            case float n when (n > 0 && n <= 1):
+                animator.SetBool("Walk_right", true);
+                animator.SetBool("Walk_left", false);
+                break;
+            default:
+                animator.SetBool("Walk_left", false);
+                animator.SetBool("Walk_right", false);
+                break;
+        }
+
         //Poruszanie graczem (jeżeli ma kontakt z podłożem), w innym przypadku niech działa przyciąganie ziemskie
         if (cc.isGrounded)
         {
@@ -56,11 +88,13 @@ public class Player_Movement : NetworkBehaviour
             {
                 forwardMovement = Input.GetAxis("Vertical") * playerRunningSpeed;
                 sidewaysMovement = Input.GetAxis("Horizontal") * playerRunningSpeed;
+                animator.SetBool("Running", true);
             }
             else 
             {
                 forwardMovement = Input.GetAxis("Vertical") * playerWalkingSpeed;
                 sidewaysMovement = Input.GetAxis("Horizontal") * playerWalkingSpeed;
+                animator.SetBool("Running", false);
             }
         }
         else { verticalVelocity += Physics.gravity.y * Time.deltaTime; }

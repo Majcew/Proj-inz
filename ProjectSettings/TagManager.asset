@@ -8,6 +8,7 @@ TagManager:
   - shotgun
   - revolver
   - weaponcamera
+  - health
   layers:
   - Default
   - TransparentFX

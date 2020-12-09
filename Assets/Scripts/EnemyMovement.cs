@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField]
+    private float speed;
     Transform player;
     Health health;
     EnemyHealth enemyHealth;
@@ -27,7 +29,10 @@ public class EnemyMovement : MonoBehaviour
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         if (enemyHealth.currentHealth > 0 && health.health > 0)
+        {
+            nav.speed = speed;
             nav.SetDestination(player.position);
+        }
         else
         {
             nav.enabled = false;

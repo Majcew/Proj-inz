@@ -14,9 +14,11 @@ public class Weapons : NetworkBehaviour
     [Header("The state of the weapons")]
     [SerializeField]
     private bool[] isActive;
+    private Animator animator;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         weaponobj[0].SetActive(true);
         modelwep[0].SetActive(true);
         isActive[0] = true;
@@ -67,18 +69,21 @@ public class Weapons : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isActive[0])
         {
             ImportantFunction();
+            animator.SetTrigger("Sword");
             shootScriptObj.SetGunId(0);
             CmdSetEnemyWepon(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !isActive[1])
         {
             ImportantFunction();
+            animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(1);
             CmdSetEnemyWepon(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && !isActive[2])
         {
             ImportantFunction();
+            animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(2);
             CmdSetEnemyWepon(2);
 
@@ -86,16 +91,32 @@ public class Weapons : NetworkBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4) && !isActive[3])
         {
             ImportantFunction();
+            animator.SetTrigger("Weapon");
             shootScriptObj.SetGunId(3);
             CmdSetEnemyWepon(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5) && !isActive[4])
         {
             ImportantFunction();
+            animator.SetTrigger("Torch");
             shootScriptObj.SetGunId(4);
             CmdSetEnemyWepon(4);
         }
     }
+
+    [Command]
+    protected void CmdTrigger(string trigger)
+    {
+        // Verification, hit detection, and damage
+        RpcSetTrigger(trigger); // Animate clients
+    }
+
+    [ClientRpc]
+    public void RpcSetTrigger(string trigger)
+    {
+        animator.SetTrigger(trigger);
+    }
+
     void ImportantFunction()
     {
         foreach (GameObject elem in weaponobj)

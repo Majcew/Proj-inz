@@ -44,6 +44,7 @@ public class EnemyAttack : NetworkBehaviour
 
     void Update()
     {
+        if (player == null) player.GetComponent<Health>();
         //sprawdzenie czy możemy zaatakować przeciwnika (timer)
         timer += Time.deltaTime;
         if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
