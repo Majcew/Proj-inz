@@ -13,6 +13,7 @@ public class Shoot : NetworkBehaviour
     private Ammunition ammoInfo;
     public AudioSource[] audiosources;
     public AudioClip[] shootingsounds;
+    public ParticleSystem[] muzzleParticle;
     private void Start()
     {
         n_animator = GetComponent<NetworkAnimator>();
@@ -52,6 +53,7 @@ public class Shoot : NetworkBehaviour
         {
             ShootBullet();
             fireTimer = 0;
+            if (muzzleParticle[id] != null) muzzleParticle[id].Play();
         }
         if (Input.GetKey("r") && ammoInfo.bulletsInMag[id] < ammoInfo.bulletsPerMag[id])
         {
