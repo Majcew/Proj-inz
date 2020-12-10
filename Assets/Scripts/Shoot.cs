@@ -10,6 +10,7 @@ public class Shoot : NetworkBehaviour
     public float[] fireRates;
     public float[] damages;
     float fireTimer;
+    [SerializeField]
     private Ammunition ammoInfo;
     public AudioSource[] audiosources;
     public AudioClip[] shootingsounds;
@@ -17,7 +18,6 @@ public class Shoot : NetworkBehaviour
     private void Start()
     {
         n_animator = GetComponent<NetworkAnimator>();
-        ammoInfo = GetComponent<Ammunition>();
         id = GetCurrentId();
     }
     private void OnEnable()
