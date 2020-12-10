@@ -10,6 +10,7 @@ TagManager:
   - weaponcamera
   - health
   - ammunition
+  - zombie
   layers:
   - Default
   - TransparentFX

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : NetworkBehaviour
 {
     public float startingHealth = 40f;
+    [SyncVar]
     public float currentHealth;
     public float sinkSpeed = 2.5f; //szybkość znikania w podłodze
     //public int scoreValue = 10;
@@ -35,14 +36,16 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount/*, Vector3 hitPoint*/){
-        if(isDead)
+    public void TakeDamage(float amount)
+    {
+        if (isDead)
             return;
         enemyAudio.Play();
         currentHealth -= amount;
         //hitParticles.transform.position = hitPoint;
         //hitParticles.Play();
-        if(currentHealth <=0){
+        if (currentHealth <= 0)
+        {
             Death();
         }
     }
@@ -60,15 +63,12 @@ public class EnemyHealth : MonoBehaviour
         enemyAudio.Play();
 
         StartCoroutine(WaitTimeBeforeDisappear(5));
-
     }
-
     IEnumerator WaitTimeBeforeDisappear(int sec)
     {
         yield return new WaitForSeconds(sec);
         StartSinking();
     }
-
     public void StartSinking(){
         GetComponent <UnityEngine.AI.NavMeshAgent>().enabled = false;
         GetComponent <Rigidbody>().isKinematic = true;
