@@ -92,10 +92,16 @@ public class Health : NetworkBehaviour
         SetHealthText();
     }
 
-    public void ResetHealth()
+    [Command]
+    public void CmdResetHealth()
     {
         isDead = false;
         health = maxHealth;
+        RcpSetHealthText();
+    }
+    [ClientRpc]
+    public void RcpSetHealthText()
+    {
         SetHealthText();
     }
 
