@@ -8,6 +8,8 @@ public class Weapons : NetworkBehaviour
     private GameObject[] weaponobj;
     [SerializeField]
     private GameObject[] modelwep;
+    [SerializeField]
+    private GameObject[] otherobj;
     [Header("Add the shot script")]
     [SerializeField]
     private Shoot shootScriptObj;
@@ -28,6 +30,10 @@ public class Weapons : NetworkBehaviour
             //Transform[] weapons = this.GetComponentInChildren<Camera>().GetComponentsInChildren<Transform>();
            
             foreach(GameObject o in modelwep){
+                setTags(o, "OwnModelWepon");
+            }
+            foreach (GameObject o in otherobj)
+            {
                 setTags(o, "OwnModelWepon");
             }
         }

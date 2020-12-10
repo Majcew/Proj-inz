@@ -2877,6 +2877,8 @@ MonoBehaviour:
   - {fileID: 4675450399500820308}
   - {fileID: 5317716890347341071}
   - {fileID: 2798991346708233667}
+  otherobj:
+  - {fileID: 7267811903389209359}
   shootScriptObj: {fileID: 8416779020016446950}
   isActive: 0100000000
 --- !u!81 &7705265402061580468
@@ -2914,6 +2916,7 @@ MonoBehaviour:
   - 15
   - 20
   - 0
+  ammoInfo: {fileID: 8918240565146831153}
   audiosources:
   - {fileID: 1502788687476388915}
   - {fileID: 7034062336525776874}
