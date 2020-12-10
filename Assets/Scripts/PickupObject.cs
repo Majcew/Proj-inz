@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using Mirror;
 
-public class PickupObject : MonoBehaviour
+public class PickupObject : NetworkBehaviour
 {
     [SerializeField]
     private GameObject pickupText;
@@ -14,11 +14,11 @@ public class PickupObject : MonoBehaviour
             {
                 case "health":
                     //CmdAddHealth();
-                    AddHealth(collidingItem.GetComponent<HealthBox>().restoreHealth);
+                    CmdAddHealth(collidingItem.GetComponent<HealthBox>().restoreHealth);
                     break;
                 case "ammunition":
                     //CmdAddAmmo();
-                    AddAmmo(collidingItem.GetComponent<PickupableAmmo>().index, collidingItem.GetComponent<PickupableAmmo>().amount);
+                    CmdAddAmmo(collidingItem.GetComponent<PickupableAmmo>().index, collidingItem.GetComponent<PickupableAmmo>().amount);
                     break;
             }
         }
@@ -34,18 +34,30 @@ public class PickupObject : MonoBehaviour
         collidingItem = null;
         pickupText.SetActive(false);
     }
+    [Command]
+    void CmdAddHealth(int amount)
+    {
+        RpcAddHealth(amount);
+    }
+    [Command]
+    void CmdAddAmmo(int index,int amount)
+    {
+        RpcAddAmmo(index, amount);
+    }
 
-    void AddHealth(int amount)
+    [ClientRpc]
+    void RpcAddHealth(int amount)
     {
         Health player_health = GetComponent<Health>();
         bool active = player_health.RestoreHP(amount);
-        if (!active) { 
+        if (!active)
+        {
             Destroy(collidingItem);
             pickupText.SetActive(false);
         }
     }
-
-    void AddAmmo(int index,int amount)
+    [ClientRpc]
+    void RpcAddAmmo(int index, int amount)
     {
         Ammunition player_ammunition = GetComponent<Ammunition>();
         player_ammunition.AddAmmunition(index, amount);

@@ -58,7 +58,6 @@ public class Health : NetworkBehaviour
         healthTextNumber.text = health.ToString();
         healthSlider.value = health;
     }
-
     public bool RestoreHP(int amount)
     {
         if (health == maxHealth)

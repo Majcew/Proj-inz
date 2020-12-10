@@ -28,10 +28,16 @@ public class Ammunition : NetworkBehaviour
     public void AddAmmunition(int id, int value)
     {
         bulletsLeft[id] += value;
+        updateUIText(id);
     }
     public void ResetAmmunition()
     {
         bulletsPerMag.CopyTo(bulletsInMag, 0);
         maxAmmoOverall.CopyTo(bulletsLeft, 0);
+    }
+    private void updateUIText(int id)
+    {
+        overallammoText.text = bulletsLeft[id].ToString();
+        ammoinmagText.text = bulletsInMag[id].ToString();
     }
 }
