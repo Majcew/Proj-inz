@@ -3040,6 +3040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b314b782aa5364bb7f244637fffa91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   pickupText: {fileID: 5267565740535156175}
 --- !u!1 &4675450398689844618
 GameObject:
