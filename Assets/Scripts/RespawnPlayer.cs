@@ -10,8 +10,6 @@ public class RespawnPlayer : NetworkBehaviour
     [SerializeField]
     private CharacterController cc;
     [SerializeField]
-    private Health health;
-    [SerializeField]
     private Ammunition ammunition;
     [SerializeField]
     private Weapons weapons;
@@ -26,7 +24,7 @@ public class RespawnPlayer : NetworkBehaviour
         }
         states[behaviourComponents.Length] = cc.enabled;
 
-        health.ResetHealth();
+        GameManager.GetPlayerHealth(this.netId.ToString()).CmdResetHealth();
         ammunition.ResetAmmunition();
         weapons.ResetWepon();
     }
@@ -50,7 +48,7 @@ public class RespawnPlayer : NetworkBehaviour
 
         cc.enabled = true;
 
-        health.ResetHealth();
+        GameManager.GetPlayerHealth(this.netId.ToString()).CmdResetHealth();
         ammunition.ResetAmmunition();
         weapons.ResetWepon();
     }
