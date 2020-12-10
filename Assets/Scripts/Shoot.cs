@@ -53,7 +53,6 @@ public class Shoot : NetworkBehaviour
         {
             ShootBullet();
             fireTimer = 0;
-            if (muzzleParticle[id] != null) muzzleParticle[id].Play();
         }
         if (Input.GetKey("r") && ammoInfo.bulletsInMag[id] < ammoInfo.bulletsPerMag[id])
         {
@@ -64,6 +63,7 @@ public class Shoot : NetworkBehaviour
     {
         if (ammoInfo.bulletsInMag[id] != 0 || id == 0)
         {
+            if (muzzleParticle[id] != null) muzzleParticle[id].Play();
             ammoInfo.bulletsInMag[id]--;
             audiosources[id].PlayOneShot(shootingsounds[id]);
             RaycastHit hit;
@@ -117,12 +117,12 @@ public class Shoot : NetworkBehaviour
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
-                        if (netIdentity != null)
+                        if (netIdentity != null && hit.transform.CompareTag("Player"))
                         {
                            CmdShootBullet(netIdentity.netId.ToString(), damages[id]);
                         }
                         EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
-                        if (enemy != null)
+                        if (enemy != null && hit.transform.CompareTag("zombie"))
                         {
                             enemy.TakeDamage(damages[id]);
                         }

@@ -8,7 +8,7 @@ public class PickupObject : NetworkBehaviour
     private GameObject collidingItem;
 
    void Update() {
-        if (Input.GetKeyDown("f") && collidingItem != null)
+        if (Input.GetKeyDown("f") && collidingItem != null && !collidingItem.CompareTag("zombie"))
         {
             switch (collidingItem.tag)
             {
