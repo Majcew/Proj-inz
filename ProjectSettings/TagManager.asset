@@ -9,6 +9,7 @@ TagManager:
   - revolver
   - weaponcamera
   - health
+  - ammunition
   layers:
   - Default
   - TransparentFX
