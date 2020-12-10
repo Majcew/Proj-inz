@@ -59,6 +59,28 @@ public class Health : NetworkBehaviour
         healthSlider.value = health;
     }
 
+    public bool RestoreHP(int amount)
+    {
+        if (health == maxHealth)
+        {
+            return true;
+        }
+        else if (health + amount > maxHealth)
+        {
+            health = 100f;
+            SetHealthText();
+            CheckHP();
+            return false;
+        }
+        else
+        {
+            health += amount;
+            SetHealthText();
+            CheckHP();
+            return false;
+        }
+    }
+
     [ClientRpc]
     public void RcpTakeDamage(float amount)
     {
