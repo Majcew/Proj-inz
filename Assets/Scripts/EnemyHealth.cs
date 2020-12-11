@@ -28,6 +28,11 @@ public class EnemyHealth : NetworkBehaviour
         currentHealth = startingHealth;
     }
 
+    void Start()
+    {
+        GameManager.AddEnemyHealth(this.netId.ToString(), this);
+    }
+
     
     void Update()
     {
