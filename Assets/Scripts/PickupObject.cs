@@ -37,31 +37,27 @@ public class PickupObject : NetworkBehaviour
     [Command]
     void CmdAddHealth(int amount)
     {
-        RpcAddHealth(amount);
-    }
-    [Command]
-    void CmdAddAmmo(int index,int amount)
-    {
-        RpcAddAmmo(index, amount);
-    }
-
-    [ClientRpc]
-    void RpcAddHealth(int amount)
-    {
-        Health player_health = GetComponent<Health>();
-        bool active = player_health.RestoreHP(amount);
-        if (!active)
+        Health player_health = GameManager.GetPlayerHealth(this.netId.ToString());
+        if (player_health.RestoreHPPossible(amount))
         {
+            player_health.RcpRestoreHP(amount);
             Destroy(collidingItem);
             pickupText.SetActive(false);
         }
     }
+
+    [Command]
+    void CmdAddAmmo(int index,int amount)
+    {
+        RpcAddAmmo(index, amount);
+        Destroy(collidingItem);
+    }
+
     [ClientRpc]
     void RpcAddAmmo(int index, int amount)
     {
         Ammunition player_ammunition = GetComponent<Ammunition>();
         player_ammunition.AddAmmunition(index, amount);
-        Destroy(collidingItem);
         pickupText.SetActive(false);
     }
 }
