@@ -12,6 +12,8 @@ public class Health : NetworkBehaviour
     private float originalRunningSpeed;
     [SyncVar]
     public float health;
+    [SyncVar]
+    public int deadCount;
     public float maxHealth = 100f;
     public Slider healthSlider;
     [SerializeField]
@@ -24,6 +26,7 @@ public class Health : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            deadCount = 0;
             playerspeeds = GetComponent<Player_Movement>();
             originalRunningSpeed = GetComponent<Player_Movement>().playerRunningSpeed;
             originalWalkingSpeed = GetComponent<Player_Movement>().playerWalkingSpeed;
@@ -104,6 +107,7 @@ public class Health : NetworkBehaviour
     public void CmdResetHealth()
     {
         isDead = false;
+        deadCount += 1;
         health = maxHealth;
         RcpSetHealthText();
     }
