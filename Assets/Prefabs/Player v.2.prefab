@@ -2690,7 +2690,7 @@ GameObject:
   - component: {fileID: 5437464771669350505}
   - component: {fileID: 3128198650828397954}
   - component: {fileID: 735532823444337462}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player v.2
   m_TagString: Player
   m_Icon: {fileID: 2800000, guid: 6c35396cb8128474a8a73c6b19f2fe1f, type: 3}
@@ -2972,6 +2972,7 @@ MonoBehaviour:
   healthText: {fileID: 4793026461187569145}
   healthTextNumber: {fileID: 8489714244332496008}
   health: 100
+  deadCount: 0
   maxHealth: 100
   healthSlider: {fileID: 850423056616587899}
   respawnPlayer: {fileID: 6218360320699046979}
@@ -2993,7 +2994,6 @@ MonoBehaviour:
   - {fileID: 6093605912220331866}
   - {fileID: 6093605912220331866}
   cc: {fileID: 4675450398585787539}
-  health: {fileID: 8630864330292884882}
   ammunition: {fileID: 8918240565146831153}
   weapons: {fileID: 7834450331984159811}
 --- !u!95 &5437464771669350505

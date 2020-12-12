@@ -26,7 +26,7 @@ public class PickupObject : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         collidingItem = other.gameObject;
-        pickupText.SetActive(true);
+        if(!collidingItem.CompareTag("zombie")) pickupText.SetActive(true);
         
     }
     private void OnTriggerExit(Collider other)

@@ -23,15 +23,19 @@ public class EnemyAttack : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        health = GameManager.GetPlayerHealth(player.GetComponent<NetworkIdentity>().netId.ToString());
-        enemyHealth = GameManager.GetEnemyHealth(this.netId.ToString());
-        //anim = GetComponent<Animator>();
-        //sprawdzanie czy gracz jest dość blisko by go zaatakować
-        if (other.gameObject == player)
-        {
-            targetDeadCount = health.deadCount;
-            playerInRange = true;
+        if (other.CompareTag("Player")) { 
+            player = other.gameObject;
+            Debug.Log(player);
+            health = GameManager.GetPlayerHealth(player.GetComponent<NetworkIdentity>().netId.ToString());
+            Debug.Log(health);
+            enemyHealth = GameManager.GetEnemyHealth(this.netId.ToString());
+            //anim = GetComponent<Animator>();
+            //sprawdzanie czy gracz jest dość blisko by go zaatakować
+            if (other.gameObject == player)
+            {
+                targetDeadCount = health.deadCount;
+                playerInRange = true;
+            }
         }
     }
 
@@ -61,7 +65,6 @@ public class EnemyAttack : NetworkBehaviour
         }
        
     }
-
     void Attack()
     {
         timer = 0f;
@@ -69,7 +72,7 @@ public class EnemyAttack : NetworkBehaviour
         //anim.SetTrigger("AttackPlayer");
         if (health.health > 0 && playerInRange && targetDeadCount == health.deadCount)
         {
-            health.RcpTakeDamage(attackDamage);
+            health.TakeDamage(attackDamage);
         }
         else
         {
