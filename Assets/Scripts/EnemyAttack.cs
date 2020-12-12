@@ -13,59 +13,69 @@ public class EnemyAttack : NetworkBehaviour
     EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
+    int targetDeadCount;
+
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        health = player.GetComponent<Health>();
-        enemyHealth = GetComponent<EnemyHealth>();
-        anim = GetComponent<Animator>();
+        playerInRange = false;
     }
 
 
     void OnTriggerEnter(Collider other)
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        health = GameManager.GetPlayerHealth(player.GetComponent<NetworkIdentity>().netId.ToString());
+        enemyHealth = GameManager.GetEnemyHealth(this.netId.ToString());
+        //anim = GetComponent<Animator>();
         //sprawdzanie czy gracz jest dość blisko by go zaatakować
         if (other.gameObject == player)
         {
+            targetDeadCount = health.deadCount;
             playerInRange = true;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        //sprawdzenie czy gracz nie uciekł
-        if (other.gameObject == player)
+        player = GameObject.FindGameObjectWithTag("Player");
         {
             playerInRange = false;
-            //event do zmiany animacji
-            anim.SetTrigger("PlayerOutOfRange");
         }
     }
 
     void Update()
     {
-        if (player == null) player.GetComponent<Health>();
+        //if (player == null) player.GetComponent<Health>();
         //sprawdzenie czy możemy zaatakować przeciwnika (timer)
-        timer += Time.deltaTime;
-        if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
+        if (playerInRange)
         {
-            CmdAttack();
+            if (health != null)
+            {
+                timer += Time.deltaTime;
+                if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
+                { 
+                    Attack();
+                }
+
+            }
         }
-        if (health.health <= 0)
-        {
-            //event do zmianyyy animacji
-            anim.SetTrigger("PlayerDead");
-        }
+       
     }
-    [Command]
-    void CmdAttack()
+
+    void Attack()
     {
         timer = 0f;
         //event do zmiany animacji
-        anim.SetTrigger("AttackPlayer");
-        if (health.health > 0)
+        //anim.SetTrigger("AttackPlayer");
+        if (health.health > 0 && playerInRange && targetDeadCount == health.deadCount)
         {
             health.RcpTakeDamage(attackDamage);
+        }
+        else
+        {
+            playerInRange = false;
+            //event do zmianyyy animacji
+            //anim.SetTrigger("PlayerDead");
         }
     }
 }
