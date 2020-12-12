@@ -58,25 +58,33 @@ public class Health : NetworkBehaviour
         healthTextNumber.text = health.ToString();
         healthSlider.value = health;
     }
-    public bool RestoreHP(int amount)
+    public bool RestoreHPPossible(int amount)
     {
-        if (health == maxHealth)
+        if (amount == 100)
+        {
+            return false;
+        }
+        else 
         {
             return true;
         }
-        else if (health + amount > maxHealth)
+    }
+
+    [ClientRpc]
+    public void RcpRestoreHP(int amount)
+    {
+    
+        if (health + amount > maxHealth)
         {
             health = 100f;
             SetHealthText();
-            CheckHP();
-            return false;
+            //CheckHP();
         }
         else
         {
             health += amount;
             SetHealthText();
-            CheckHP();
-            return false;
+            //CheckHP();
         }
     }
 
