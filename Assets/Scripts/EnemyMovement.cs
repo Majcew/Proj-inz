@@ -9,62 +9,72 @@ public class EnemyMovement : NetworkBehaviour
     [SerializeField]
     private float speed;
     Transform playerTransform;
-    GameObject[] players;
-    GameObject player;
+    Transform player;
     Health health;
     NetworkIdentity networkIdentity;
     EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
-/*    void Awake()
+
+    public LayerMask whatIsGround, whatIsPlayer;
+    private bool playerInSightRange;
+    [SerializeField]
+    private float sightRange;
+
+    //Patroling
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+    void Awake()
     {
         //szukanie gracza
+        /*
         player = GameObject.FindGameObjectWithTag("Player").transform;
         health = player.GetComponent<Health>();
-        enemyHealth = GetComponent<EnemyHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();*/
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
-    }*/
+    }
 
     // Update is called once per frame
     void Update()
     {
         //szukanie gracza
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-        players = GameObject.FindGameObjectsWithTag("Player");
-        if (players != null)
-        {
-            if(players.Length > 0)
-            {
-                float distance = Vector3.Distance(players[0].transform.position, this.transform.position);
-                player = players[0];
-                playerTransform = player.transform;
+        if (playerInSightRange) {
+            //players = GameObject.FindGameObjectsWithTag("Player");
+            player = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer)[0].transform;
+            float distance = Vector3.Distance(player.transform.position, this.transform.position);
+            /*player = players[0].transform;
+            playerTransform = player.transform;*/
+            networkIdentity = player.GetComponent<NetworkIdentity>();
+             if (networkIdentity != null)
+             {
+                health = GameManager.GetPlayerHealth(networkIdentity.netId.ToString());
+             }
+             float current_obj_dist = Vector3.Distance(player.transform.position, this.transform.position);
+             if (current_obj_dist < distance)
+             {
+                distance = current_obj_dist;
+                /*player = players[i].transform;
+                playerTransform = player.transform;*/
+                player = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer)[0].transform;
                 networkIdentity = player.GetComponent<NetworkIdentity>();
                 if (networkIdentity != null)
                 {
                     health = GameManager.GetPlayerHealth(networkIdentity.netId.ToString());
                 }
+             }
+        }
 
-                for (int i = 0; i < players.Length; i++)
-                {
-                    float current_obj_dist = Vector3.Distance(players[i].transform.position, this.transform.position);
-                    if (current_obj_dist < distance)
-                    {
-                        distance = current_obj_dist;
-                        player = players[i];
-                        playerTransform = player.transform;
-                        networkIdentity = player.GetComponent<NetworkIdentity>();
-                        if (networkIdentity != null)
-                        {
-                            health = GameManager.GetPlayerHealth(networkIdentity.netId.ToString());
-                        }
-                    }
-                }
-            }
+        if (!playerInSightRange)
+        {
+            player = null;
+            Patroling();
         }
 
         enemyHealth = GameManager.GetEnemyHealth(this.netId.ToString());
-        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
-        if (playerTransform != null && health != null && enemyHealth != null && nav != null)
+        /*if (playerTransform != null && health != null && enemyHealth != null && nav != null)
         {
             if (enemyHealth.currentHealth > 0 && health.health > 0)
             {
@@ -80,7 +90,39 @@ public class EnemyMovement : NetworkBehaviour
         else
         {
             Debug.Log("Sth is null in Enemy Movemet");
-        }
+        }*/
         
+    }
+
+    private void Patroling()
+    {
+        if (!walkPointSet) SearchWalkPoint();
+
+        if (walkPointSet)
+            nav.SetDestination(walkPoint);
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        //Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+    }
+
+    private void SearchWalkPoint()
+    {
+        //Calculate random point in range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPointSet = true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 }
