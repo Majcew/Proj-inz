@@ -3,27 +3,29 @@ using Mirror;
 
 public class EnemyAttack : NetworkBehaviour
 {
+    private float nextAttack = 0f;
     public float timeBetweenAttacks = 0.5f;
     public float attackDamage = 10f;
 
     Animator anim;
-    GameObject player;
+    Transform player;
 
     Health health;
     EnemyHealth enemyHealth;
-    bool playerInRange;
     float timer;
     int targetDeadCount;
 
-    void Awake()
-    {
-        playerInRange = false;
-    }
+    [SerializeField]
+    private float attackRange;
+    [SerializeField]
+    private LayerMask whatIsPlayer;
+    public UnityEngine.AI.NavMeshAgent nav;
 
+    private bool playerInAttackRange;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) { 
+        /*if (other.CompareTag("Player")) { 
             player = other.gameObject;
             Debug.Log(player);
             health = GameManager.GetPlayerHealth(player.GetComponent<NetworkIdentity>().netId.ToString());
@@ -36,22 +38,22 @@ public class EnemyAttack : NetworkBehaviour
                 targetDeadCount = health.deadCount;
                 playerInRange = true;
             }
-        }
+        }*/
     }
 
     void OnTriggerExit(Collider other)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        /*player = GameObject.FindGameObjectWithTag("Player");
         {
             playerInRange = false;
-        }
+        }*/
     }
 
     void Update()
     {
         //if (player == null) player.GetComponent<Health>();
         //sprawdzenie czy możemy zaatakować przeciwnika (timer)
-        if (playerInRange)
+        /*if (playerInRange)
         {
             if (health != null)
             {
@@ -62,23 +64,42 @@ public class EnemyAttack : NetworkBehaviour
                 }
 
             }
+        }*/
+        nextAttack += Time.deltaTime;
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (playerInAttackRange)
+        {
+            player = Physics.OverlapSphere(transform.position, attackRange, whatIsPlayer)[0].transform;
+            health = player.GetComponent<Health>();
+            nav.SetDestination(transform.position);
+            transform.LookAt(player);
+            if(nextAttack > timeBetweenAttacks)
+            {
+                Attack();
+                nextAttack = 0f;
+            }
         }
-       
     }
-    void Attack()
+    public void Attack()
     {
         timer = 0f;
         //event do zmiany animacji
         //anim.SetTrigger("AttackPlayer");
-        if (health.health > 0 && playerInRange && targetDeadCount == health.deadCount)
+        if (health.health > 0)
         {
             health.RpcTakeDamage(attackDamage);
         }
         else
         {
-            playerInRange = false;
             //event do zmianyyy animacji
             //anim.SetTrigger("PlayerDead");
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
