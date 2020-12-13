@@ -92,7 +92,7 @@ public class Health : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RcpTakeDamage(float amount)
+    public void RpcTakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0 && !isDead)
