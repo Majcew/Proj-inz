@@ -159,7 +159,7 @@ public class Shoot : NetworkBehaviour
                 }
             case HitTarget.Player:
                 {
-                    GameManager.GetPlayerHealth(netId).TakeDamage(damage);
+                    GameManager.GetPlayerHealth(netId).RpcTakeDamage(damage);
                     break;
                 }
             default:

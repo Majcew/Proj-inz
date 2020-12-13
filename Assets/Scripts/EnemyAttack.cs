@@ -72,7 +72,7 @@ public class EnemyAttack : NetworkBehaviour
         //anim.SetTrigger("AttackPlayer");
         if (health.health > 0 && playerInRange && targetDeadCount == health.deadCount)
         {
-            health.TakeDamage(attackDamage);
+            health.RpcTakeDamage(attackDamage);
         }
         else
         {
