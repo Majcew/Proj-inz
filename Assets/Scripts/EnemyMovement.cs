@@ -3,22 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class EnemyMovement : NetworkBehaviour
 {
     [SerializeField]
-    private float speed;
+    /*private float speed;
     Transform playerTransform;
-    Transform player;
     Health health;
-    NetworkIdentity networkIdentity;
+    NetworkIdentity networkIdentity;*/
     EnemyHealth enemyHealth;
-    public UnityEngine.AI.NavMeshAgent nav;
+    Animator anim;
+    Transform player;
+    private UnityEngine.AI.NavMeshAgent nav;
 
     public LayerMask whatIsGround, whatIsPlayer;
     private bool playerInSightRange;
     [SerializeField]
-    private float sightRange,attackRange;
+    private float sightRange;
 
     //Patroling
     public Vector3 walkPoint;
@@ -32,6 +33,7 @@ public class EnemyMovement : NetworkBehaviour
         health = player.GetComponent<Health>();
         enemyHealth = GetComponent<EnemyHealth>();*/
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,10 +44,12 @@ public class EnemyMovement : NetworkBehaviour
 
         if (playerInSightRange) { 
             player = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer)[0].transform;
+            nav.speed = 1.5f;
             ChasePlayer();
         }
         if(!playerInSightRange) {
             player = null;
+            nav.speed = 0.75f;
             Patroling();
         };
         /*if (playerInSightRange) {
@@ -93,16 +97,17 @@ public class EnemyMovement : NetworkBehaviour
         {
             Debug.Log("Sth is null in Enemy Movemet");
         }*/
-        
     }
     private void ChasePlayer()
     {
+        anim.SetBool("ChasePlayer", true);
         nav.SetDestination(player.position);
     }
 
 
     private void Patroling()
     {
+        anim.SetBool("ChasePlayer", false);
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)

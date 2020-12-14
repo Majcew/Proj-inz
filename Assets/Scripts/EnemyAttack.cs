@@ -19,9 +19,15 @@ public class EnemyAttack : NetworkBehaviour
     private float attackRange;
     [SerializeField]
     private LayerMask whatIsPlayer;
-    public UnityEngine.AI.NavMeshAgent nav;
+    private UnityEngine.AI.NavMeshAgent nav;
 
     private bool playerInAttackRange;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -80,12 +86,16 @@ public class EnemyAttack : NetworkBehaviour
                 nextAttack = 0f;
             }
         }
+        else
+        {
+            anim.SetBool("AttackPlayer", false);
+        }
     }
     public void Attack()
     {
         timer = 0f;
         //event do zmiany animacji
-        //anim.SetTrigger("AttackPlayer");
+        anim.SetBool("AttackPlayer", true);
         if (health.health > 0)
         {
             health.RpcTakeDamage(attackDamage);

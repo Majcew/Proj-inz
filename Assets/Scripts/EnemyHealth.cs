@@ -13,15 +13,16 @@ public class EnemyHealth : NetworkBehaviour
     public AudioClip deathClip;
 
     Animator anim;
+    UnityEngine.AI.NavMeshAgent nav;
     AudioSource enemyAudio;
     //ParticleSystem hitParticles;
     //do efektów krwi przy trafieniu, nie ruszałem
     CapsuleCollider capsuleCollider;
     bool isDead;
-    bool isSinking;
     void Awake()
     {
         anim = GetComponent<Animator>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
         enemyAudio = GetComponent<AudioSource>();
         //hitParticles = GetComponentInChildren<ParticleSystem>();
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -31,14 +32,6 @@ public class EnemyHealth : NetworkBehaviour
     void Start()
     {
         GameManager.AddEnemyHealth(this.netId.ToString(), this);
-    }
-
-    
-    void Update()
-    {
-        if(isSinking){
-            transform.Translate(-Vector3.up * sinkSpeed * Time.deltaTime );
-        }
     }
 
     public void TakeDamage(float amount)
@@ -51,6 +44,8 @@ public class EnemyHealth : NetworkBehaviour
         //hitParticles.Play();
         if (currentHealth <= 0)
         {
+            nav.enabled = false;
+            DisableAllScripts();
             Death();
         }
     }
@@ -63,7 +58,6 @@ public class EnemyHealth : NetworkBehaviour
 
         //event do zmiany animacji
         anim.SetTrigger("Dead");
-        anim.SetBool("ZoombieDead", true);
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
 
@@ -75,11 +69,20 @@ public class EnemyHealth : NetworkBehaviour
         StartSinking();
     }
     public void StartSinking(){
-        GetComponent <UnityEngine.AI.NavMeshAgent>().enabled = false;
-        GetComponent <Rigidbody>().isKinematic = true;
-        isSinking = true;
-        Destroy (gameObject, 6f);
+        Destroy(gameObject, 6f);
     }
 
-
+    private void DisableAllScripts()
+    {
+        MonoBehaviour[] comps = GetComponents<MonoBehaviour>();
+        NetworkBehaviour[] comps2 = GetComponents<NetworkBehaviour>();
+        foreach (MonoBehaviour c in comps)
+        {
+            c.enabled = false;
+        }
+        foreach (NetworkBehaviour c in comps2)
+        {
+            c.enabled = false;
+        }
+    }
 }
