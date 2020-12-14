@@ -13,6 +13,7 @@ public class EnemyHealth : NetworkBehaviour
     public AudioClip deathClip;
 
     Animator anim;
+    NetworkAnimator n_anim;
     UnityEngine.AI.NavMeshAgent nav;
     AudioSource enemyAudio;
     //ParticleSystem hitParticles;
@@ -22,6 +23,7 @@ public class EnemyHealth : NetworkBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        n_anim = GetComponent<NetworkAnimator>();
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
         enemyAudio = GetComponent<AudioSource>();
         //hitParticles = GetComponentInChildren<ParticleSystem>();
@@ -57,7 +59,7 @@ public class EnemyHealth : NetworkBehaviour
         capsuleCollider.isTrigger = true;
 
         //event do zmiany animacji
-        anim.SetTrigger("Dead");
+        n_anim.SetTrigger("Dead");
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
 
