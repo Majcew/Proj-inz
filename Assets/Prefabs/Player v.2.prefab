@@ -2733,7 +2733,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.84, z: 0}
+  m_Center: {x: 0, y: 0.88, z: 0}
 --- !u!114 &7546164951341965279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2806,8 +2806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerWalkingSpeed: 1
-  playerRunningSpeed: 1.5
+  playerWalkingSpeed: 1.5
+  playerRunningSpeed: 3
   jumpStrength: 3
   verticalRotationLimit: 55
 --- !u!114 &1633984853274607255
