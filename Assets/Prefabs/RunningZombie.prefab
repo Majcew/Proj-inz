@@ -453,6 +453,8 @@ GameObject:
   - component: {fileID: 1055314321052887230}
   - component: {fileID: 1055314321052887207}
   - component: {fileID: -6577489225829047331}
+  - component: {fileID: 7021637815580035251}
+  - component: {fileID: 8456665788571021029}
   m_Layer: 0
   m_Name: RunningZombie
   m_TagString: zombie
@@ -648,8 +650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 1.5
-  nav: {fileID: 0}
+  enemyHealth: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 0
@@ -657,7 +658,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   sightRange: 0
-  attackRange: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
 --- !u!114 &1055314321052887231
@@ -720,7 +720,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 0
-  nav: {fileID: 0}
 --- !u!114 &-6577489225829047331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,6 +736,40 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &7021637815580035251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055314321052887217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 1055314321052887225}
+--- !u!114 &8456665788571021029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055314321052887217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &1055314321060565217
 GameObject:
   m_ObjectHideFlags: 0

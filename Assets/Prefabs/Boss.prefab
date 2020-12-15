@@ -355,6 +355,8 @@ GameObject:
   - component: {fileID: 1055314321052887230}
   - component: {fileID: 1055314321052887207}
   - component: {fileID: -6577489225829047331}
+  - component: {fileID: 7003630748886585236}
+  - component: {fileID: 3733158000984875340}
   m_Layer: 0
   m_Name: Boss
   m_TagString: zombie
@@ -388,7 +390,7 @@ Animator:
   m_GameObject: {fileID: 1055314321052887217}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ed9d15413a4d774391fefd5a1eda22f, type: 2}
+  m_Controller: {fileID: 9100000, guid: e377ff13c8be0c24aa6b5ae0c675cb76, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -614,8 +616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  timeBetweenAttacks: 0.5
-  attackDamage: 10
+  timeBetweenAttacks: 2
+  attackDamage: 65
   attackRange: 1.5
   whatIsPlayer:
     serializedVersion: 2
@@ -636,6 +638,40 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &7003630748886585236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055314321052887217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 1055314321052887225}
+--- !u!114 &3733158000984875340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055314321052887217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &1260908167070143670
 GameObject:
   m_ObjectHideFlags: 0
