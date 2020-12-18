@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AddItem : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class AddItem : MonoBehaviour
         {
             //TODO: GameManager skrypt tutaj, oraz zniszcz przedmiot
             GameManager.AddItemCount();
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }

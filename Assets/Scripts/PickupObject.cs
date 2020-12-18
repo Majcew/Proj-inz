@@ -1,13 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class PickupObject : NetworkBehaviour
 {
     [SerializeField]
     private GameObject pickupText;
+    [SerializeField]
+    private Text itemsCountText;
+    [SerializeField]
+    private GameObject keyImage;
+    private int itemCount;
+    private bool keyState;
     private GameObject collidingItem;
 
-   void Update() {
+
+    private void Awake()
+    {
+        itemsCountText.text = itemCount+"/6";
+    }
+    void Update() {
         if (Input.GetKeyDown("f") && collidingItem != null && !collidingItem.CompareTag("zombie"))
         {
             switch (collidingItem.tag)
@@ -22,11 +34,15 @@ public class PickupObject : NetworkBehaviour
                     break;
             }
         }
+        UpdateItemsTaken();
+        UpdateKeyTaken();
     }
     private void OnTriggerEnter(Collider other)
     {
-        collidingItem = other.gameObject;
-        if(!collidingItem.CompareTag("zombie")) pickupText.SetActive(true);
+        if (other.CompareTag("health") || other.CompareTag("ammunition")) {
+            collidingItem = other.gameObject;
+            pickupText.SetActive(true); 
+        }
         
     }
     private void OnTriggerExit(Collider other)
@@ -59,5 +75,15 @@ public class PickupObject : NetworkBehaviour
         Ammunition player_ammunition = GetComponent<Ammunition>();
         player_ammunition.AddAmmunition(index, amount);
         pickupText.SetActive(false);
+    }
+    public void UpdateItemsTaken()
+    {
+        itemCount = GameManager.GetItemCount();
+        itemsCountText.text = itemCount + "/6";
+    }
+    public void UpdateKeyTaken()
+    {
+        keyState = GameManager.GetKeyState();
+        keyImage.SetActive(keyState);
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - health
   - ammunition
   - zombie
+  - item
   layers:
   - Default
   - TransparentFX
