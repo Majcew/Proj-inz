@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     private static Dictionary<string, Health> playerHealths = new Dictionary<string, Health>();
     private static Dictionary<string, EnemyHealth> enemyHealths = new Dictionary<string, EnemyHealth>();
+    private static int itemsCount = 0;
+    private static bool keyTaken = false;
 
     public static void AddPlayerHealth (string netId, Health player_health)
     {
@@ -37,5 +39,19 @@ public class GameManager : MonoBehaviour
     public static EnemyHealth GetEnemyHealth(string netId)
     {
         return enemyHealths[netId];
+    }
+
+    public static void AddItemCount()
+    {
+        itemsCount++;
+    }
+
+    public static void UpdatePlayerItemCount()
+    {
+        //TODO: Funkcja uzupełniająca w UI gracza liczbę itemsów zdobytych.
+    }
+    public static void UpdateKeyPossesion(bool state)
+    {
+        //TODO: Funkcja dodająca ikonkę klucza do UI gracza.
     }
 }
