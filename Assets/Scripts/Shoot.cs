@@ -74,7 +74,7 @@ public class Shoot : NetworkBehaviour
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit, 0.75f))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
-                        if (netIdentity != null)
+                        if (netIdentity != null && !netIdentity.CompareTag("ammunition") && !netIdentity.CompareTag("health"))
                         {
                             HitTarget hitTarget;
                             if (hit.transform.GetComponent<EnemyHealth>() == null)
@@ -103,7 +103,7 @@ public class Shoot : NetworkBehaviour
                         {
                             Debug.DrawLine(fpscam.transform.position, hit.point, Color.green, 3.0f);
                             NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
-                            if (netIdentity != null)
+                            if (netIdentity != null && !netIdentity.CompareTag("ammunition") && !netIdentity.CompareTag("health"))
                             {
                                 HitTarget hitTarget;
                                 if (hit.transform.GetComponent<EnemyHealth>() == null)
@@ -125,7 +125,7 @@ public class Shoot : NetworkBehaviour
                     if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
                     {
                         NetworkIdentity netIdentity = hit.transform.GetComponent<NetworkIdentity>();
-                        if (netIdentity != null)
+                        if (netIdentity != null && !netIdentity.CompareTag("ammunition") && !netIdentity.CompareTag("health"))
                         {
                             HitTarget hitTarget;
                             if (hit.transform.GetComponent<EnemyHealth>() == null)
