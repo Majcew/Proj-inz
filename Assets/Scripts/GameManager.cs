@@ -6,8 +6,10 @@ public class GameManager : MonoBehaviour
 {
     private static Dictionary<string, Health> playerHealths = new Dictionary<string, Health>();
     private static Dictionary<string, EnemyHealth> enemyHealths = new Dictionary<string, EnemyHealth>();
+    private static int itemsCount = 0;
+    private static bool keyState = false;
 
-    public static void AddPlayerHealth (string netId, Health player_health)
+    public static void AddPlayerHealth(string netId, Health player_health)
     {
         string name = "Player" + netId;
         player_health.transform.name = name;
@@ -37,5 +39,22 @@ public class GameManager : MonoBehaviour
     public static EnemyHealth GetEnemyHealth(string netId)
     {
         return enemyHealths[netId];
+    }
+
+    public static void AddItemCount()
+    {
+        itemsCount++;
+    }
+    public static void AddKey()
+    {
+        keyState = true;
+    }
+    public static int GetItemCount()
+    {
+        return itemsCount;
+    }
+    public static bool GetKeyState()
+    {
+        return keyState;
     }
 }
