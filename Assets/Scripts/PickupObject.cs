@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System.Collections.Generic;
+using Mirror.RemoteCalls;
+using System.Collections;
+using System.Linq;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -32,14 +36,19 @@ public class PickupObject : NetworkBehaviour
                     //CmdAddAmmo();
                     CmdAddAmmo(collidingItem.GetComponent<PickupableAmmo>().index, collidingItem.GetComponent<PickupableAmmo>().amount);
                     break;
+                case "item":
+                    CmdUpdateItemsTaken();
+                    Destroy(collidingItem);
+                    collidingItem = null;
+                    pickupText.SetActive(false);
+                    break;
             }
         }
-        UpdateItemsTaken();
         UpdateKeyTaken();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("health") || other.CompareTag("ammunition")) {
+        if (other.CompareTag("health") || other.CompareTag("ammunition") || other.CompareTag("item")) {
             collidingItem = other.gameObject;
             pickupText.SetActive(true); 
         }
@@ -76,10 +85,20 @@ public class PickupObject : NetworkBehaviour
         player_ammunition.AddAmmunition(index, amount);
         pickupText.SetActive(false);
     }
-    public void UpdateItemsTaken()
+    [Command]
+    public void CmdUpdateItemsTaken()
     {
-        itemCount = GameManager.GetItemCount();
-        itemsCountText.text = itemCount + "/6";
+        RpcSetItemsCountText();
+    }
+
+    [ClientRpc]
+    public void RpcSetItemsCountText()
+    {
+        Dictionary<string, PlayerViewManager>  playerViews = GameManager.GetPlayerViews();
+        for (int i = 0; i < playerViews.Count; i++)
+        {
+           playerViews.Values.ElementAt(i).SetItemCountText();
+        }
     }
     public void UpdateKeyTaken()
     {

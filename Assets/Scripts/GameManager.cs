@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static Dictionary<string, Health> playerHealths = new Dictionary<string, Health>();
+    private static Dictionary<string, PlayerViewManager> playerViews = new Dictionary<string, PlayerViewManager>();
     private static Dictionary<string, EnemyHealth> enemyHealths = new Dictionary<string, EnemyHealth>();
     private static int itemsCount = 0;
     private static bool keyState = false;
@@ -15,6 +18,13 @@ public class GameManager : MonoBehaviour
         player_health.transform.name = name;
         playerHealths.Add(netId, player_health);
         Debug.Log("PlayerHealth of " + name + " added");
+    }
+
+    public static void AddPlayerView(string netId, PlayerViewManager player_view)
+    {
+        string name = "Player" + netId;
+        playerViews.Add(netId, player_view);
+        Debug.Log("PlayerViews of " + name + " added");
     }
 
     public static void AddEnemyHealth(string netId, EnemyHealth enemy_health)
@@ -31,6 +41,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("PlayerHealth of Player" + netId + " removed");
     }
 
+    public static void RemovePlayerView(string netId)
+    {
+        playerViews.Remove(netId);
+        Debug.Log("PlayerViews of Player" + netId + " removed");
+    }
+
     public static Health GetPlayerHealth(string netId)
     {
         return playerHealths[netId];
@@ -44,6 +60,11 @@ public class GameManager : MonoBehaviour
     public static void AddItemCount()
     {
         itemsCount++;
+    }
+
+    public static Dictionary<string, PlayerViewManager> GetPlayerViews()
+    {
+        return playerViews;
     }
     public static void AddKey()
     {

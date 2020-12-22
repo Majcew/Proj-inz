@@ -22,10 +22,12 @@ public class ControlPlayerRemote : NetworkBehaviour
     {
         base.OnStartClient();
         GameManager.AddPlayerHealth(this.netId.ToString(), this.GetComponent<Health>());
+        GameManager.AddPlayerView(this.netId.ToString(), this.GetComponent<PlayerViewManager>());
     }
 
     void OnDisable()
     {
         GameManager.RemovePlayerHealth(this.netId.ToString());
+        GameManager.RemovePlayerView(this.netId.ToString());
     }
 }
