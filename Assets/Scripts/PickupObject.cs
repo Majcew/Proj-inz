@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System.Collections.Generic;
+using Mirror.RemoteCalls;
+using System.Collections;
+using System.Linq;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -34,7 +38,7 @@ public class PickupObject : NetworkBehaviour
                     break;
             }
         }
-        UpdateItemsTaken();
+        CmdUpdateItemsTaken();
         UpdateKeyTaken();
     }
     private void OnTriggerEnter(Collider other)
@@ -76,10 +80,20 @@ public class PickupObject : NetworkBehaviour
         player_ammunition.AddAmmunition(index, amount);
         pickupText.SetActive(false);
     }
-    public void UpdateItemsTaken()
+    [Command]
+    public void CmdUpdateItemsTaken()
     {
-        itemCount = GameManager.GetItemCount();
-        itemsCountText.text = itemCount + "/6";
+        RpcSetItemsCountText();
+    }
+
+    [ClientRpc]
+    public void RpcSetItemsCountText()
+    {
+        Dictionary<string, PlayerViewManager>  playerViews = GameManager.GetPlayerViews();
+        for (int i = 0; i < playerViews.Count; i++)
+        {
+           playerViews.Values.ElementAt(i).SetItemCountText(GameManager.GetItemCount());
+        }
     }
     public void UpdateKeyTaken()
     {
