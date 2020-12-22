@@ -11,7 +11,7 @@ public class PlayerViewManager : NetworkBehaviour
     [SyncVar]
     private int itemCount = GameManager.GetItemCount();
 
-    public void SetItemCountText(int count)
+    public void SetItemCountText()
     {
         itemCount++;
         Debug.Log("PVM dziala");

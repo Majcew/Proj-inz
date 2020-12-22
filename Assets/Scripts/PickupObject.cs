@@ -36,14 +36,19 @@ public class PickupObject : NetworkBehaviour
                     //CmdAddAmmo();
                     CmdAddAmmo(collidingItem.GetComponent<PickupableAmmo>().index, collidingItem.GetComponent<PickupableAmmo>().amount);
                     break;
+                case "item":
+                    CmdUpdateItemsTaken();
+                    Destroy(collidingItem);
+                    collidingItem = null;
+                    pickupText.SetActive(false);
+                    break;
             }
         }
-        CmdUpdateItemsTaken();
         UpdateKeyTaken();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("health") || other.CompareTag("ammunition")) {
+        if (other.CompareTag("health") || other.CompareTag("ammunition") || other.CompareTag("item")) {
             collidingItem = other.gameObject;
             pickupText.SetActive(true); 
         }
@@ -92,7 +97,7 @@ public class PickupObject : NetworkBehaviour
         Dictionary<string, PlayerViewManager>  playerViews = GameManager.GetPlayerViews();
         for (int i = 0; i < playerViews.Count; i++)
         {
-           playerViews.Values.ElementAt(i).SetItemCountText(GameManager.GetItemCount());
+           playerViews.Values.ElementAt(i).SetItemCountText();
         }
     }
     public void UpdateKeyTaken()
