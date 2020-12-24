@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using Mirror;
+using System.Security.Cryptography;
+using System.Collections.Specialized;
+using System;
+
+
 
 /* Komenda wymagająca podpięcie komponentu "PlayerController" w poprawnego działania skryptu*/
 [RequireComponent(typeof(CharacterController))]
@@ -32,6 +37,18 @@ public class Player_Movement : NetworkBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.O))
+        {
+            this.SavePlayer();
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            this.LoadPlayer();
+        }
     }
 
     void LateUpdate()
@@ -116,5 +133,47 @@ public class Player_Movement : NetworkBehaviour
         Vector3 playerMovement = new Vector3(sidewaysMovement, verticalVelocity, forwardMovement);
         //Poruszanie bohaterem
         cc.Move(transform.rotation * playerMovement * Time.deltaTime);
+    }
+
+    public void SavePlayer()
+    {
+        Console.Clear();
+        print("Zapisywanie...");
+        PlayerData data = SystemSave.SavePlayer(this);
+        if (data != null)
+        {
+            print("pozycja save data: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2]);
+            print("rotacja save data: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2] + ", " + data.rotation[3]);
+            print("pozycja save true: " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z);
+            print("Zapisano");
+        }
+        else
+        {
+            print("Zapis niemożliwy");
+        }
+    }
+
+    public void LoadPlayer()
+    {
+        print("Wczytywanie...");
+        PlayerData data = SystemSave.LoadPlayer();
+        if(data != null)
+        {
+            Vector3 position = new Vector3(data.position[0], data.position[1], data.position[2]);
+            Quaternion rotation = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);
+            cc.enabled = false;
+            transform.position = position;
+            transform.rotation = rotation;
+            cc.enabled = true;
+            print("pozycja load vector: " + position.x + ", " + position.y + ", " + position.z);
+            print("pozycja load data: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2]);
+            print("rotacja save data: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2] + ", " + data.rotation[3]);
+            print("pozycja load true: " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z);
+            print("Wczytano");
+        }
+        else
+        {
+            print("Wczytanie niemożliwe");
+        }
     }
 }
