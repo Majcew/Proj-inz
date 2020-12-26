@@ -40,8 +40,8 @@ public class EnemyHealth : NetworkBehaviour
     {
         GameManager.AddEnemyHealth(this.netId.ToString(), this);
     }
-
-    public void TakeDamage(float amount)
+    [ClientRpc]
+    public void RpcTakeDamage(float amount)
     {
         if (isDead)
             return;
@@ -95,7 +95,6 @@ public class EnemyHealth : NetworkBehaviour
             NetworkServer.Spawn(toRender);     
         }
     }
-
     private void DisableAllScripts()
     {
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
