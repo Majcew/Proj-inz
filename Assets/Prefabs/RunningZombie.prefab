@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: -6577489225829047331}
   - component: {fileID: 7021637815580035251}
   - component: {fileID: 8456665788571021029}
+  - component: {fileID: 3733766402361937974}
   m_Layer: 0
   m_Name: RunningZombie
   m_TagString: zombie
@@ -662,8 +663,21 @@ MonoBehaviour:
   syncInterval: 0.1
   startingHealth: 60
   currentHealth: 0
-  sinkSpeed: 2.5
   deathClip: {fileID: 8300000, guid: 271dc4ec6281315b2be6daf4fd0cd73e, type: 3}
+  item_list:
+  - {fileID: 8409580844848026533, guid: a5e952da89d25eb45ad568386b383377, type: 3}
+  - {fileID: 0}
+  - {fileID: 2248972653853278652, guid: 0929ee23d5933e94c9f65723db39ec46, type: 3}
+  - {fileID: 0}
+  behaviours:
+  - {fileID: 1055314321052887229}
+  - {fileID: 1055314321052887228}
+  - {fileID: 1055314321052887231}
+  - {fileID: 1055314321052887230}
+  - {fileID: 1055314321052887207}
+  - {fileID: -6577489225829047331}
+  - {fileID: 3733766402361937974}
+  - {fileID: 8456665788571021029}
 --- !u!195 &1055314321052887230
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -751,11 +765,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   clientAuthority: 0
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
+  localPositionSensitivity: 0
+  localRotationSensitivity: 0
+  localScaleSensitivity: 0
+--- !u!114 &3733766402361937974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055314321052887217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  clientAuthority: 0
+  localPositionSensitivity: 0
+  localRotationSensitivity: 0
+  localScaleSensitivity: 0
+  target: {fileID: 1055314322359427521}
 --- !u!1 &1055314321060565217
 GameObject:
   m_ObjectHideFlags: 0
