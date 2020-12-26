@@ -59,10 +59,15 @@ public class MenuBehaviour : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefs.GetInt("scene_id"));
     }
 
-        public void Join()
+    public void Join()
     {
         PlayerPrefs.SetInt("start_action_mode", 2);
         PlayerPrefs.SetString("network_address", GameObject.Find("InputField").GetComponent<InputField>().text);
         SceneManager.LoadScene(PlayerPrefs.GetInt("scene_id"));
+    }
+
+    public void GameInstruction()
+    {
+        SceneManager.LoadScene(9);
     }
 }
