@@ -36,13 +36,14 @@ public class EnemyHealth : NetworkBehaviour
         currentHealth = startingHealth;
     }
 
-    void Start()
+    private void Start()
     {
         GameManager.AddEnemyHealth(this.netId.ToString(), this);
     }
     [ClientRpc]
     public void RpcTakeDamage(float amount)
     {
+        Debug.Log("Strzeliłem");
         if (isDead)
             return;
         enemyAudio.Play();

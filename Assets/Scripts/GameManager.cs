@@ -31,7 +31,13 @@ public class GameManager : MonoBehaviour
     {
         string name = "Enemy" + netId;
         enemy_health.transform.name = name;
-        enemyHealths.Add(netId, enemy_health);
+        if (!enemyHealths.ContainsKey(netId)) enemyHealths.Add(netId, enemy_health);
+        else 
+        {
+            
+            enemyHealths.Remove(netId);
+            enemyHealths.Add(netId, enemy_health);
+        }
         Debug.Log("EnemyHealth of " + name + " added");
     }
 

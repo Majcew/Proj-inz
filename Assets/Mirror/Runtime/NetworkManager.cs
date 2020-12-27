@@ -830,6 +830,7 @@ namespace Mirror
         /// </summary>
         public virtual void OnDestroy()
         {
+            Debug.Log("Zniszczy³em NetworkManagera");
             logger.Log("NetworkManager destroyed");
         }
 

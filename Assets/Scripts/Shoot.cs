@@ -149,7 +149,8 @@ public class Shoot : NetworkBehaviour
     [Command]
     private void CmdShootBullet(string netId, float damage, HitTarget hitTarget)
     {
-        Debug.Log("CmdShootBullet: netId: " + netId + " damage: " + damage);
+        //Debug.Log("CmdShootBullet: netId: " + netId + " damage: " + damage);
+
         switch (hitTarget)
         {
             case HitTarget.Enemy: 
