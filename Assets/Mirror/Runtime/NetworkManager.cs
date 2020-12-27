@@ -599,6 +599,9 @@ namespace Mirror
 
             StopClient();
             StopServer();
+            Destroy(this.gameObject);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             int exit_scene;
             if (PlayerPrefs.GetInt("exit_scene") != null)
             {
@@ -644,6 +647,9 @@ namespace Mirror
             startPositionIndex = 0;
 
             networkSceneName = "";
+            Destroy(this.gameObject);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(4);
         }
 
