@@ -63,6 +63,7 @@ public class MenuBehaviour : MonoBehaviour
     {
         PlayerPrefs.SetInt("start_action_mode", 2);
         PlayerPrefs.SetString("network_address", GameObject.Find("InputField").GetComponent<InputField>().text);
+        PlayerPrefs.SetInt("exit_scene", 10);
         SceneManager.LoadScene(PlayerPrefs.GetInt("scene_id"));
     }
 

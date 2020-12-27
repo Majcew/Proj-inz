@@ -599,8 +599,20 @@ namespace Mirror
 
             StopClient();
             StopServer();
+            int exit_scene;
+            if (PlayerPrefs.GetInt("exit_scene") != null)
+            {
+                exit_scene = PlayerPrefs.GetInt("exit_scene");
+                Debug.Log("exit_scene: yes" + exit_scene.ToString());
+                PlayerPrefs.DeleteKey("exit_scene");
+            }
+            else
+            {
+                exit_scene = 10;
+            }
             Debug.LogError("Stop host called");
-            SceneManager.LoadScene(4);
+            Debug.Log("exit_scene: " + exit_scene.ToString());
+            SceneManager.LoadScene(exit_scene);
         }
 
         /// <summary>
@@ -669,7 +681,19 @@ namespace Mirror
             Destroy(this.gameObject);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene(4);
+            int exit_scene;
+            if (PlayerPrefs.GetInt("exit_scene") != null)
+            {
+                exit_scene = PlayerPrefs.GetInt("exit_scene");
+                Debug.Log("exit_scene: yes" + exit_scene.ToString());
+                PlayerPrefs.DeleteKey("exit_scene");
+            }
+            else
+            {
+                exit_scene = 10;
+            }
+            Debug.Log("exit_scene: " + exit_scene.ToString());
+            SceneManager.LoadScene(exit_scene);
         }
 
         /// <summary>

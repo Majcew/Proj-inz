@@ -35,4 +35,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameInstruction.unity
     guid: 93d2f9f804eb4064480a48032ef50592
+  - enabled: 1
+    path: Assets/Scenes/ErrorInConnection.unity
+    guid: 506581d7fcd60d645897886ab860c19c
+  - enabled: 1
+    path: Assets/Scenes/OutOfMap.unity
+    guid: f2ad20d0e3dfb22418945c150e7dc7ea
   m_configObjects: {}
