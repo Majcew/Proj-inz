@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 
 public class BossDoorBehaviour : NetworkBehaviour
@@ -16,7 +14,7 @@ public class BossDoorBehaviour : NetworkBehaviour
     {
         objectInsideCollider++;
         if(other.CompareTag("Player"))
-        CheckRequirements();
+        CmdCheckRequirements();
     }
 
     private void OnTriggerExit(Collider other)
@@ -31,7 +29,7 @@ public class BossDoorBehaviour : NetworkBehaviour
         }
     }
     [Command(ignoreAuthority = true)]
-    void CheckRequirements()
+    void CmdCheckRequirements()
     {
         if(GameManager.GetItemCount() == itemAmountReq)
         {

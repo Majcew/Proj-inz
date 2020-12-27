@@ -51,49 +51,42 @@ public class EnemyHealth : NetworkBehaviour
         //hitParticles.Play();
         if (currentHealth <= 0)
         {
+            //event do zmiany animacji
+            n_anim.SetTrigger("Dead");
             nav.enabled = false;
-            DisableAllScripts();
             RollItem();
+            DisableAllScripts();
             Death();
         }
     }
-
 
     void Death(){
         isDead = true;
 
         capsuleCollider.isTrigger = true;
 
-        //event do zmiany animacji
-        n_anim.SetTrigger("Dead");
+        
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
 
-        StartCoroutine(WaitTimeBeforeDisappear(5));
-    }
-    IEnumerator WaitTimeBeforeDisappear(int sec)
-    {
-        yield return new WaitForSeconds(sec);
-        StartSinking();
-    }
-    public void StartSinking(){
         Destroy(gameObject, 6f);
     }
-    /* Funkcja odpowiedzialna za spawnowanie różnych itemków po śmierci przeciwnika.
-       W celu poprawnego działania przedmioty powinny posiadać odpowiednie skrypty od pakietu "Mirror".
-       Należy te obiekty także podpiąć do "NetworkManagera" w zakładce "Spawnable Prefabs"
-    */
-    private void RollItem()
+    ///<summary>
+    ///Funkcja odpowiedzialna za spawnowanie różnych itemków po śmierci przeciwnika.
+    ///W celu poprawnego działania przedmioty powinny posiadać odpowiednie skrypty od pakietu "Mirror".
+    ///Należy te obiekty także podpiąć do "NetworkManagera" w zakładce "Spawnable Prefabs"
+    ///</summary>
+    void RollItem()
     {
-        // Pobieramy pozycję przeciwnika po śmierci
+        /*// Pobieramy pozycję przeciwnika po śmierci
         Vector3 position = transform.position;
         // Będziemy losowali z tablicy o zadanej wymiarze.
-        int index = Random.Range(0,item_list.Length);
-        if(item_list[index] != null)
+        int index = Random.Range(0, item_list.Length);
+        if (item_list[index] != null)
         {
             GameObject toRender = Instantiate(item_list[index], position + new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity);
-            NetworkServer.Spawn(toRender);     
-        }
+            NetworkServer.Spawn(toRender);
+        }*/
     }
     private void DisableAllScripts()
     {

@@ -12,6 +12,7 @@ TagManager:
   - ammunition
   - zombie
   - item
+  - bossDoor
   layers:
   - Default
   - TransparentFX

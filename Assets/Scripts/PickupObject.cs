@@ -66,8 +66,7 @@ public class PickupObject : NetworkBehaviour
         if (player_health.RestoreHPPossible(amount))
         {
             player_health.RcpRestoreHP(amount);
-            Destroy(collidingItem);
-            pickupText.SetActive(false);
+            RpcDestroyGameObject(collidingItem);
         }
     }
 
@@ -75,13 +74,13 @@ public class PickupObject : NetworkBehaviour
     void CmdAddAmmo(int index,int amount)
     {
         RpcAddAmmo(index, amount);
-        Destroy(collidingItem);
     }
 
     [ClientRpc]
     void RpcAddAmmo(int index, int amount)
     {
         Ammunition player_ammunition = GetComponent<Ammunition>();
+        Destroy(collidingItem);
         player_ammunition.AddAmmunition(index, amount);
         pickupText.SetActive(false);
     }
@@ -89,6 +88,15 @@ public class PickupObject : NetworkBehaviour
     public void CmdUpdateItemsTaken()
     {
         RpcSetItemsCountText();
+    }
+    /// <summary>
+    /// Destroys the referenced GameObject on all client instances.
+    /// </summary>
+    [ClientRpc]
+    private void RpcDestroyGameObject(GameObject referenced)
+    {
+        Destroy(referenced);
+        pickupText.SetActive(false);
     }
 
     [ClientRpc]
