@@ -22,10 +22,7 @@ public class BossDoorBehaviour : NetworkBehaviour
         objectInsideCollider--;
         if(objectInsideCollider == 0)
         {
-            foreach(GameObject c in msg)
-            {
-                c.SetActive(false);
-            }
+            CmdShowMessages(false);
         }
     }
     [Command(ignoreAuthority = true)]
@@ -37,10 +34,7 @@ public class BossDoorBehaviour : NetworkBehaviour
             RpcOpenDoor();
         } else
         {
-            foreach (GameObject c in msg)
-            {
-                c.SetActive(true);
-            }
+            RpcShowMessages(true);
         }
     }
     [ClientRpc]
@@ -48,5 +42,18 @@ public class BossDoorBehaviour : NetworkBehaviour
     {
         Destroy(door);
         Destroy(this.gameObject);
+    }
+    [Command]
+    void CmdShowMessages(bool state)
+    {
+        RpcShowMessages(state);
+    }
+    [ClientRpc]
+    void RpcShowMessages(bool state)
+    {
+        foreach (GameObject c in msg)
+        {
+            c.SetActive(state);
+        }
     }
 }
