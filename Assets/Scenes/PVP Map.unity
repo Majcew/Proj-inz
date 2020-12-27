@@ -7175,6 +7175,14 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[5]
       value: 
       objectReference: {fileID: 1055314321052887217, guid: 58a09029a01cb6e4988e2ebb3667877e, type: 3}
+    - target: {fileID: 2620898732766891591, guid: 9b04fabf8ea67594da227f12fa70f26d, type: 3}
+      propertyPath: runInBackground
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2620898732766891591, guid: 9b04fabf8ea67594da227f12fa70f26d, type: 3}
+      propertyPath: dontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2620898732766891592, guid: 9b04fabf8ea67594da227f12fa70f26d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.7
