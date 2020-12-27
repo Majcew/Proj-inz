@@ -108,7 +108,7 @@ public class Health : NetworkBehaviour
         SetHealthText();
     }
 
-    [Command]
+    [Command(ignoreAuthority = true)]
     public void CmdResetHealth()
     {
         isDead = false;

@@ -55,7 +55,7 @@ public class Weapons : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(ignoreAuthority = true)]
     void CmdSetEnemyWepon(int wepon_id){
         RpcSetWepon(wepon_id);
     }
