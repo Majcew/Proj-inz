@@ -20,6 +20,7 @@ public class BossDoorBehaviour : NetworkBehaviour
     private void OnTriggerExit(Collider other)
     {
         objectInsideCollider--;
+        Debug.Log(objectInsideCollider);
         if(objectInsideCollider == 0)
         {
             CmdShowMessages(false);
@@ -43,14 +44,16 @@ public class BossDoorBehaviour : NetworkBehaviour
         Destroy(door);
         Destroy(this.gameObject);
     }
-    [Command]
+    [Command(ignoreAuthority = true)]
     void CmdShowMessages(bool state)
     {
+        Debug.Log("Command funkcja");
         RpcShowMessages(state);
     }
     [ClientRpc]
     void RpcShowMessages(bool state)
     {
+        Debug.Log("RPC Funkcja");
         foreach (GameObject c in msg)
         {
             c.SetActive(state);
