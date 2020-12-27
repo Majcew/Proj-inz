@@ -826,6 +826,8 @@ namespace Mirror
         /// <param name="newSceneName"></param>
         public virtual void ServerChangeScene(string newSceneName)
         {
+            Debug.Log("Server change Scena");
+
             if (string.IsNullOrEmpty(newSceneName))
             {
                 logger.LogError("ServerChangeScene empty scene name");

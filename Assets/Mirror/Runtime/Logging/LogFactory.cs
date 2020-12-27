@@ -79,7 +79,14 @@ namespace Mirror
     {
         public static void LogError(this ILogger logger, object message)
         {
-            logger.Log(LogType.Error, message);
+            
+           if(message.ToString() != "RPC Function RpcTakeDamage called on Client.")
+            {
+                Debug.LogError("Tak log error called! : " + message.ToString());
+                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
+                logger.Log(LogType.Error, message);
+            }
+           
         }
 
         public static void Assert(this ILogger logger, bool condition, string message)
