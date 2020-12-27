@@ -53,9 +53,11 @@ public class Player_Movement : NetworkBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Debug.Log("esc clicked");
+            PlayerPrefs.SetInt("exit_scene", 11);
             GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
             GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopHost();
-            SceneManager.LoadScene(4);
+            PlayerPrefs.DeleteKey("exit_scene");
+            SceneManager.LoadScene(11);
         }
     }
 

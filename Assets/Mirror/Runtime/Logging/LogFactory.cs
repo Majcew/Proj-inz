@@ -82,7 +82,8 @@ namespace Mirror
         {   
            if (Regex.IsMatch(message.ToString(), "Spawn scene object not found for"))
             {
-               GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
+                PlayerPrefs.SetInt("exit_scene", 10);
+                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
             }
             Debug.LogError("Tak log error called! : " + message.ToString());
             logger.Log(LogType.Error, message);
