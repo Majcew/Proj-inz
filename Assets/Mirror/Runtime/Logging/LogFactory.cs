@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 namespace Mirror
 {
@@ -78,15 +79,13 @@ namespace Mirror
     public static class ILoggerExtensions
     {
         public static void LogError(this ILogger logger, object message)
-        {
-            
-           if(message.ToString() != "RPC Function RpcTakeDamage called on Client.")
+        {   
+           if (Regex.IsMatch(message.ToString(), "Spawn scene object not found for"))
             {
-                Debug.LogError("Tak log error called! : " + message.ToString());
-                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
-                logger.Log(LogType.Error, message);
+               GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
             }
-           
+            Debug.LogError("Tak log error called! : " + message.ToString());
+            logger.Log(LogType.Error, message);
         }
 
         public static void Assert(this ILogger logger, bool condition, string message)
