@@ -363,7 +363,6 @@ namespace Mirror
             // there is NO WAY to make it synchronous because both LoadSceneAsync
             // and LoadScene do not finish loading immediately. as long as we
             // have the onlineScene feature, it will be asynchronous!
-
             SetupServer();
 
             // scene change needed? then change scene and spawn afterwards.
@@ -384,6 +383,7 @@ namespace Mirror
         /// </summary>
         public void StartClient()
         {
+            Debug.Log("Start CLient sam");
             mode = NetworkManagerMode.ClientOnly;
 
             InitializeSingleton();
@@ -420,6 +420,7 @@ namespace Mirror
         /// <param name="uri">location of the server to connect to</param>
         public void StartClient(Uri uri)
         {
+            Debug.Log("Start CLient uri");
             mode = NetworkManagerMode.ClientOnly;
 
             InitializeSingleton();
@@ -453,7 +454,16 @@ namespace Mirror
         /// </summary>
         public void StartHost()
         {
-            mode = NetworkManagerMode.Host;
+            if (PlayerPrefs.GetString("mode") == "singleplayer")
+            {
+                mode = NetworkManagerMode.Offline;
+                maxConnections = 1;
+            }
+            else
+            {
+                mode = NetworkManagerMode.Host;
+            }
+                
 
             // StartHost is inherently ASYNCHRONOUS (=doesn't finish immediately)
             //
@@ -589,6 +599,8 @@ namespace Mirror
 
             StopClient();
             StopServer();
+            Debug.LogError("Stop host called");
+            SceneManager.LoadScene(4);
         }
 
         /// <summary>
@@ -620,6 +632,7 @@ namespace Mirror
             startPositionIndex = 0;
 
             networkSceneName = "";
+            SceneManager.LoadScene(4);
         }
 
         /// <summary>
@@ -652,6 +665,11 @@ namespace Mirror
             }
 
             networkSceneName = "";
+            Debug.LogError("Stop client called");
+            Destroy(this.gameObject);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene(4);
         }
 
         /// <summary>
@@ -808,6 +826,8 @@ namespace Mirror
         /// <param name="newSceneName"></param>
         public virtual void ServerChangeScene(string newSceneName)
         {
+            Debug.Log("Server change Scena");
+
             if (string.IsNullOrEmpty(newSceneName))
             {
                 logger.LogError("ServerChangeScene empty scene name");
@@ -1351,7 +1371,9 @@ namespace Mirror
         /// </summary>
         /// <param name="conn">Connection from client.</param>
         /// <param name="errorCode">Error code.</param>
-        public virtual void OnServerError(NetworkConnection conn, int errorCode) { }
+        public virtual void OnServerError(NetworkConnection conn, int errorCode) {
+            Debug.LogError("Server error");
+        }
 
         /// <summary>
         /// Called from ServerChangeScene immediately before SceneManager.LoadSceneAsync is executed
@@ -1380,6 +1402,7 @@ namespace Mirror
             // OnClientConnect by default calls AddPlayer but it should not do
             // that when we have online/offline scenes. so we need the
             // clientLoadedScene flag to prevent it.
+            Debug.Log("Client connect info");
             if (!clientLoadedScene)
             {
                 // Ready/AddPlayer is usually triggered by a scene load completing. if no scene was loaded, then Ready/AddPlayer it here instead.
@@ -1406,7 +1429,10 @@ namespace Mirror
         /// </summary>
         /// <param name="conn">Connection to a server.</param>
         /// <param name="errorCode">Error code.</param>
-        public virtual void OnClientError(NetworkConnection conn, int errorCode) { }
+        public virtual void OnClientError(NetworkConnection conn, int errorCode) {
+            Debug.LogError("Error OnCLientError jakis error");
+            SceneManager.LoadScene(4);
+        }
 
         /// <summary>
         /// Called on clients when a servers tells the client it is no longer ready.
@@ -1475,7 +1501,9 @@ namespace Mirror
         /// <summary>
         /// This is invoked when the client is started.
         /// </summary>
-        public virtual void OnStartClient() { }
+        public virtual void OnStartClient() {
+            Debug.Log("Client is started");
+        }
 
         /// <summary>
         /// This is called when a server is stopped - including when a host is stopped.

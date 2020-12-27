@@ -3,6 +3,7 @@ using Mirror;
 using System.Security.Cryptography;
 using System.Collections.Specialized;
 using System;
+using UnityEngine.SceneManagement;
 
 
 
@@ -48,6 +49,13 @@ public class Player_Movement : NetworkBehaviour
         if (Input.GetKey(KeyCode.L))
         {
             this.LoadPlayer();
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Debug.Log("esc clicked");
+            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
+            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopHost();
+            SceneManager.LoadScene(4);
         }
     }
 
