@@ -2972,9 +2972,9 @@ MonoBehaviour:
   syncInterval: 0.1
   healthText: {fileID: 4793026461187569145}
   healthTextNumber: {fileID: 8489714244332496008}
-  health: 100
+  health: 10000
   deadCount: 0
-  maxHealth: 100
+  maxHealth: 10000
   healthSlider: {fileID: 850423056616587899}
   respawnPlayer: {fileID: 6218360320699046979}
 --- !u!114 &6218360320699046979
@@ -3061,6 +3061,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0487950aadb10a9479d948158dd18a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   itemsCountText: {fileID: 4135181066706789566}
 --- !u!1 &4675450398689844618
 GameObject:
