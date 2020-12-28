@@ -12,18 +12,23 @@ public class BossDoorBehaviour : NetworkBehaviour
     private int objectInsideCollider = 0;
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
         objectInsideCollider++;
-        if(other.CompareTag("Player"))
         CmdCheckRequirements();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        objectInsideCollider--;
-        Debug.Log(objectInsideCollider);
-        if(objectInsideCollider == 0)
+        if (other.CompareTag("Player"))
         {
-            CmdShowMessages(false);
+            objectInsideCollider--;
+            Debug.Log(objectInsideCollider);
+            if(objectInsideCollider == 0)
+            {
+                CmdShowMessages(false);
+            }
         }
     }
     [Command(ignoreAuthority = true)]

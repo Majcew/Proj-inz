@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyHealth : NetworkBehaviour
 {
+    private GameObject toRender = null;
+
     public float startingHealth = 40f;
     [SyncVar]
     public float currentHealth;
@@ -48,7 +50,7 @@ public class EnemyHealth : NetworkBehaviour
             //event do zmiany animacji
             n_anim.SetTrigger("Dead");
             nav.enabled = false;
-            RollItem();
+            CmdRollItem();
             DisableAllScripts();
             Death();
         }
@@ -80,7 +82,8 @@ public class EnemyHealth : NetworkBehaviour
     ///W celu poprawnego działania przedmioty powinny posiadać odpowiednie skrypty od pakietu "Mirror".
     ///Należy te obiekty także podpiąć do "NetworkManagera" w zakładce "Spawnable Prefabs"
     ///</summary>
-    void RollItem()
+    [Command(ignoreAuthority = true)]
+    void CmdRollItem()
     {
         // Pobieramy pozycję przeciwnika po śmierci
         Vector3 position = transform.position;
@@ -88,12 +91,17 @@ public class EnemyHealth : NetworkBehaviour
         int index = Random.Range(0, item_list.Length - 1);
         if (item_list[index] != null)
         {
-            GameObject toRender = Instantiate(item_list[index], position + new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity);
-            ServerSpawner.SpawnObject(toRender);
+            toRender = Instantiate(item_list[index], position + new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity);
+            RpcRollItem();
             
         }
     }
-private void DisableAllScripts()
+    [ClientRpc]
+    private void RpcRollItem()
+    {
+        NetworkServer.Spawn(toRender);
+    }
+    private void DisableAllScripts()
     {
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         foreach (Behaviour c in behaviours)

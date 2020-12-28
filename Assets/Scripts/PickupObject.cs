@@ -38,9 +38,7 @@ public class PickupObject : NetworkBehaviour
                     break;
                 case "item":
                     CmdUpdateItemsTaken();
-                    Destroy(collidingItem);
                     collidingItem = null;
-                    pickupText.SetActive(false);
                     break;
             }
         }
@@ -107,6 +105,10 @@ public class PickupObject : NetworkBehaviour
         {
            playerViews.Values.ElementAt(i).SetItemCountText();
         }
+        Destroy(collidingItem);
+        pickupText.SetActive(false);
+
+
     }
     public void UpdateKeyTaken()
     {
