@@ -38,6 +38,7 @@ public class PickupObject : NetworkBehaviour
                     break;
                 case "item":
                     CmdUpdateItemsTaken();
+                    Destroy(collidingItem);
                     collidingItem = null;
                     break;
             }
