@@ -2972,9 +2972,9 @@ MonoBehaviour:
   syncInterval: 0.1
   healthText: {fileID: 4793026461187569145}
   healthTextNumber: {fileID: 8489714244332496008}
-  health: 10000
+  health: 200
   deadCount: 0
-  maxHealth: 10000
+  maxHealth: 200
   healthSlider: {fileID: 850423056616587899}
   respawnPlayer: {fileID: 6218360320699046979}
 --- !u!114 &6218360320699046979
