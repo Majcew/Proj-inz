@@ -662,7 +662,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   startingHealth: 60
-  currentHealth: 0
+  currentHealth: 60
   deathClip: {fileID: 8300000, guid: 271dc4ec6281315b2be6daf4fd0cd73e, type: 3}
   item_list:
   - {fileID: 8409580844848026533, guid: a5e952da89d25eb45ad568386b383377, type: 3}
@@ -710,11 +710,11 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   timeBetweenAttacks: 0.5
-  attackDamage: 10
-  attackRange: 0
+  attackDamage: 5
+  attackRange: 0.6
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
 --- !u!114 &-6577489225829047331
 MonoBehaviour:
   m_ObjectHideFlags: 0
