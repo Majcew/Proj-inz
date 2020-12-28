@@ -40,6 +40,19 @@ public class EnemyHealth : NetworkBehaviour
     {
         GameManager.AddEnemyHealth(this.netId.ToString(), this);
     }
+    private void LateUpdate()
+    {
+        if (currentHealth <= 0 && !isDead)
+        {
+            isDead = true;
+            //event do zmiany animacji
+            n_anim.SetTrigger("Dead");
+            nav.enabled = false;
+            RollItem();
+            DisableAllScripts();
+            Death();
+        }
+    }
     [ClientRpc]
     public void RpcTakeDamage(float amount)
     {
@@ -50,19 +63,9 @@ public class EnemyHealth : NetworkBehaviour
         currentHealth -= amount;
         //hitParticles.transform.position = hitPoint;
         //hitParticles.Play();
-        if (currentHealth <= 0)
-        {
-            //event do zmiany animacji
-            n_anim.SetTrigger("Dead");
-            nav.enabled = false;
-            RollItem();
-            DisableAllScripts();
-            Death();
-        }
     }
 
     void Death(){
-        isDead = true;
 
         capsuleCollider.isTrigger = true;
 
@@ -79,17 +82,18 @@ public class EnemyHealth : NetworkBehaviour
     ///</summary>
     void RollItem()
     {
-        /*// Pobieramy pozycję przeciwnika po śmierci
+        // Pobieramy pozycję przeciwnika po śmierci
         Vector3 position = transform.position;
         // Będziemy losowali z tablicy o zadanej wymiarze.
-        int index = Random.Range(0, item_list.Length);
+        int index = Random.Range(0, item_list.Length - 1);
         if (item_list[index] != null)
         {
             GameObject toRender = Instantiate(item_list[index], position + new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity);
-            NetworkServer.Spawn(toRender);
-        }*/
+            ServerSpawner.SpawnObject(toRender);
+            
+        }
     }
-    private void DisableAllScripts()
+private void DisableAllScripts()
     {
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         foreach (Behaviour c in behaviours)
