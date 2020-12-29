@@ -88,7 +88,7 @@ public class EnemyHealth : NetworkBehaviour
         // Pobieramy pozycję przeciwnika po śmierci
         Vector3 position = transform.position;
         // Będziemy losowali z tablicy o zadanej wymiarze.
-        int index = Random.Range(0, item_list.Length - 1);
+        int index = Random.Range(0, item_list.Length);
         if (item_list[index] != null)
         {
             toRender = Instantiate(item_list[index], position + new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity);

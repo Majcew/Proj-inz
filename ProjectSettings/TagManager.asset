@@ -13,6 +13,7 @@ TagManager:
   - zombie
   - item
   - bossDoor
+  - spawner
   layers:
   - Default
   - TransparentFX
