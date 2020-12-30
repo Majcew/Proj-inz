@@ -41,13 +41,17 @@ public class PickupObject : NetworkBehaviour
                     Destroy(collidingItem);
                     collidingItem = null;
                     break;
+                case "key":
+                    CmdUpdateKeyState();
+                    Destroy(collidingItem);
+                    collidingItem = null;
+                    break;
             }
         }
-        UpdateKeyTaken();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("health") || other.CompareTag("ammunition") || other.CompareTag("item")) {
+        if (other.CompareTag("health") || other.CompareTag("ammunition") || other.CompareTag("item") || other.CompareTag("key")) {
             collidingItem = other.gameObject;
             pickupText.SetActive(true); 
         }
@@ -88,6 +92,11 @@ public class PickupObject : NetworkBehaviour
     {
         RpcSetItemsCountText();
     }
+    [Command]
+    public void CmdUpdateKeyState()
+    {
+        RpcSetKeyImage();
+    }
     /// <summary>
     /// Destroys the referenced GameObject on all client instances.
     /// </summary>
@@ -108,12 +117,16 @@ public class PickupObject : NetworkBehaviour
         }
         Destroy(collidingItem);
         pickupText.SetActive(false);
-
-
     }
-    public void UpdateKeyTaken()
+    [ClientRpc]
+    public void RpcSetKeyImage()
     {
-        keyState = GameManager.GetKeyState();
-        keyImage.SetActive(keyState);
+        Dictionary<string, PlayerViewManager> playerViews = GameManager.GetPlayerViews();
+        for (int i = 0; i < playerViews.Count; i++)
+        {
+            playerViews.Values.ElementAt(i).SetKeyStateImage();
+        }
+        Destroy(collidingItem);
+        pickupText.SetActive(false);
     }
 }

@@ -567,7 +567,7 @@ MonoBehaviour:
   currentHealth: 0
   deathClip: {fileID: 8300000, guid: 271dc4ec6281315b2be6daf4fd0cd73e, type: 3}
   item_list:
-  - {fileID: 8409580844848026533, guid: a5e952da89d25eb45ad568386b383377, type: 3}
+  - {fileID: 374289202576707483, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
   behaviours:
   - {fileID: 1055314321052887228}
   - {fileID: 1055314321052887230}

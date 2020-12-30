@@ -3064,6 +3064,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   itemsCountText: {fileID: 4135181066706789566}
+  keyImage: {fileID: 1625146329207788207}
 --- !u!1 &4675450398689844618
 GameObject:
   m_ObjectHideFlags: 0

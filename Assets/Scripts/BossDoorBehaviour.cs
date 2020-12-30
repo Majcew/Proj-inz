@@ -34,7 +34,7 @@ public class BossDoorBehaviour : NetworkBehaviour
     [Command(ignoreAuthority = true)]
     void CmdCheckRequirements()
     {
-        if(GameManager.GetItemCount() == itemAmountReq)
+        if(GameManager.GetItemCount() == itemAmountReq && GameManager.GetKeyState())
         {
             //Można tutaj dodać animację przesuwania drzwi. W tej chwili po prostu niszczę obiekt.
             RpcOpenDoor();
