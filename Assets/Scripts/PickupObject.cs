@@ -90,11 +90,13 @@ public class PickupObject : NetworkBehaviour
     [Command]
     public void CmdUpdateItemsTaken()
     {
+        GameManager.AddItemCount();
         RpcSetItemsCountText();
     }
     [Command]
     public void CmdUpdateKeyState()
     {
+        GameManager.AddKey();
         RpcSetKeyImage();
     }
     /// <summary>
@@ -114,7 +116,6 @@ public class PickupObject : NetworkBehaviour
         for (int i = 0; i < playerViews.Count; i++)
         {
            playerViews.Values.ElementAt(i).SetItemCountText();
-           GameManager.AddItemCount();
         }
         Destroy(collidingItem);
         pickupText.SetActive(false);
@@ -126,7 +127,6 @@ public class PickupObject : NetworkBehaviour
         for (int i = 0; i < playerViews.Count; i++)
         {
             playerViews.Values.ElementAt(i).SetKeyStateImage();
-            GameManager.AddKey();
         }
         Destroy(collidingItem);
         pickupText.SetActive(false);
