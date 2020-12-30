@@ -114,6 +114,7 @@ public class PickupObject : NetworkBehaviour
         for (int i = 0; i < playerViews.Count; i++)
         {
            playerViews.Values.ElementAt(i).SetItemCountText();
+           GameManager.AddItemCount();
         }
         Destroy(collidingItem);
         pickupText.SetActive(false);
@@ -125,6 +126,7 @@ public class PickupObject : NetworkBehaviour
         for (int i = 0; i < playerViews.Count; i++)
         {
             playerViews.Values.ElementAt(i).SetKeyStateImage();
+            GameManager.AddKey();
         }
         Destroy(collidingItem);
         pickupText.SetActive(false);
