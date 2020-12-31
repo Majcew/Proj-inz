@@ -238,6 +238,7 @@ namespace Mirror
         /// </summary>
         public virtual void Awake()
         {
+            playerPrefab.SetActive(true);
             // Don't allow collision-destroyed second instance to continue.
             if (!InitializeSingleton()) return;
 
@@ -282,6 +283,27 @@ namespace Mirror
             NetworkServer.Update();
             NetworkClient.Update();
             UpdateScene();
+        }
+
+        public virtual void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                BackToMain();
+            }
+        }
+
+        public virtual void BackToMain()
+        {
+            if (SceneManager.GetActiveScene().name == "WinnerScene")
+            {
+                Debug.Log("space clicked");
+                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
+                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopHost();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene(0);
+            }
         }
 
         #endregion
@@ -886,6 +908,9 @@ namespace Mirror
                 NetworkServer.SendToAll(new SceneMessage { sceneName = newSceneName });
             }
 
+            playerPrefab.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             startPositionIndex = 0;
             startPositions.Clear();
         }
@@ -986,6 +1011,12 @@ namespace Mirror
                     ClientScene.PrepareToSpawnSceneObjects();
                     if (logger.LogEnabled()) logger.Log("Rebuild Client spawnableObjects after additive scene load: " + scene.name);
                 }
+            }
+            if (scene.name == "WinnerScene")
+            {
+                ClientScene.UnregisterPrefab(playerPrefab);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
 
