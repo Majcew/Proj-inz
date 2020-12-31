@@ -47,6 +47,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("PlayerHealth of Player" + netId + " removed");
     }
 
+    public static void RemoveAllPlayers()
+    {
+        for(int i=0; i<playerHealths.Values.Count; i++)
+        {
+            GameObject player = playerHealths.Values.ElementAt<Health>(i).gameObject;
+            Debug.Log("ds: " + player.name);
+
+            Destroy(playerHealths.Values.ElementAt<Health>(i).gameObject);
+        }
+    }
+
     public static void RemovePlayerView(string netId)
     {
         playerViews.Remove(netId);

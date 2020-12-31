@@ -11,11 +11,9 @@ public class WinTrigger : NetworkBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("you win");
-            PlayerPrefs.SetInt("exit_scene", 4);
-            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopClient();
-            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().StopHost();
-            PlayerPrefs.DeleteKey("exit_scene");
-            SceneManager.LoadScene(4);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("WinnerScene");
         }
     }
 

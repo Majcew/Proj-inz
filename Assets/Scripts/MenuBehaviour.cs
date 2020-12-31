@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -70,5 +71,14 @@ public class MenuBehaviour : MonoBehaviour
     public void GameInstruction()
     {
         SceneManager.LoadScene(9);
+    }
+
+    public void WinnerBackToMenu()
+    {
+        NetworkManager manager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        if (manager != null)
+        {
+            manager.BackToMain();
+        }
     }
 }

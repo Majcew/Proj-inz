@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OutOfMap.unity
     guid: f2ad20d0e3dfb22418945c150e7dc7ea
+  - enabled: 1
+    path: Assets/Scenes/FIrstScene/WinnerScene.unity
+    guid: e4dd2fc38d4d43847b4f49d8949fb6e7
   m_configObjects: {}
