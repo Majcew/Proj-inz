@@ -90,11 +90,13 @@ public class PickupObject : NetworkBehaviour
     [Command]
     public void CmdUpdateItemsTaken()
     {
+        GameManager.AddItemCount();
         RpcSetItemsCountText();
     }
     [Command]
     public void CmdUpdateKeyState()
     {
+        GameManager.AddKey();
         RpcSetKeyImage();
     }
     /// <summary>

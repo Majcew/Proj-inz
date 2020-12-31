@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  timeBetweenSpawns: 10
+  timeBetweenSpawns: 120
   prefabs:
   - {fileID: 1055314321052887217, guid: caa9a7e04903ed41e816a13e6a623d05, type: 3}
   - {fileID: 1055314321052887217, guid: 58a09029a01cb6e4988e2ebb3667877e, type: 3}

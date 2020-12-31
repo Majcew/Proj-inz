@@ -1,6 +1,4 @@
 ﻿using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +12,12 @@ public class PlayerViewManager : NetworkBehaviour
     private int itemCount = GameManager.GetItemCount();
     [SyncVar]
     private bool keyState = GameManager.GetKeyState();
+
+    private void Start()
+    {
+        itemsCountText.text = itemCount + "/6";
+        keyImage.SetActive(keyState);
+    }
 
     public void SetItemCountText()
     {
