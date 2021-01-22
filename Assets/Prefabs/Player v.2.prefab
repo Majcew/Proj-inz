@@ -2697,7 +2697,7 @@ GameObject:
   m_Icon: {fileID: 2800000, guid: 6c35396cb8128474a8a73c6b19f2fe1f, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4675450398585787538
 Transform:
   m_ObjectHideFlags: 0
@@ -2952,8 +2952,8 @@ MonoBehaviour:
   syncInterval: 0.1
   bulletsPerMag: 00000000070000001e0000000800000000000000
   maxAmmoOverall: 000000000e000000780000001000000000000000
-  bulletsInMag: 00000000070000001e0000000800000000000000
-  bulletsLeft: 000000000e000000780000001000000000000000
+  bulletsInMag: 0000000007000000000000000000000000000000
+  bulletsLeft: 000000003f000000000000000000000000000000
   ammoinmagText: {fileID: 5197457273318440954}
   overallammoText: {fileID: 7694874397240364365}
 --- !u!114 &8630864330292884882
@@ -2972,9 +2972,9 @@ MonoBehaviour:
   syncInterval: 0.1
   healthText: {fileID: 4793026461187569145}
   healthTextNumber: {fileID: 8489714244332496008}
-  health: 4000
+  health: 300
   deadCount: 0
-  maxHealth: 4000
+  maxHealth: 300
   healthSlider: {fileID: 850423056616587899}
   respawnPlayer: {fileID: 6218360320699046979}
 --- !u!114 &6218360320699046979
