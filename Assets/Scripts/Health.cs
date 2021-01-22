@@ -14,7 +14,7 @@ public class Health : NetworkBehaviour
     public float health;
     [SyncVar]
     public int deadCount;
-    public float maxHealth = 100f;
+    public float maxHealth;
     public Slider healthSlider;
     [SerializeField]
     private RespawnPlayer respawnPlayer;
@@ -63,7 +63,7 @@ public class Health : NetworkBehaviour
     }
     public bool RestoreHPPossible(int amount)
     {
-        if (amount == 100)
+        if (health + amount >= maxHealth)
         {
             return false;
         }
@@ -79,7 +79,7 @@ public class Health : NetworkBehaviour
     
         if (health + amount > maxHealth)
         {
-            health = 100f;
+            health = maxHealth;
             SetHealthText();
             //CheckHP();
         }
